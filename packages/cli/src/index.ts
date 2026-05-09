@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+import { Command } from 'commander';
+import { serve } from './commands/serve.js';
+import { runSetup } from './commands/setup.js';
+
+const program = new Command();
+
+program
+  .name('mdocs')
+  .description('mDocs — local documentation server')
+  .version('0.1.0');
+
+program
+  .command('serve')
+  .description('Start the mDocs local server')
+  .option('-p, --port <port>', 'Port to listen on', '4873')
+  .option('-H, --host <host>', 'Host to bind to', '127.0.0.1')
+  .option('-d, --data-dir <dir>', 'Directory that holds (or will hold) .mdocs/')
+  .option('-o, --origin <origin>', 'Allowed CORS origin')
+  .option('-t, --github-token <token>', 'GitHub PAT for cloning private repositories (or set GITHUB_TOKEN env var)')
+  .action(serve);
+
+program
+  .command('setup')
+  .description('Initialize .mdocs/ project structure in the current directory')
+  .option('-d, --data-dir <dir>', 'Target directory (defaults to cwd)')
+  .action((opts) => runSetup(opts.dataDir));
+
+program.parse();

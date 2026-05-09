@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"D:\\\\coding2k26\\\\idocs-new\" -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Sort-Object)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm approve-builds *)",
+      "Bash(pnpm build *)",
+      "Bash(Get-ChildItem -Path \"D:\\\\coding2k26\" -Directory)",
+      "Bash(Select-Object Name)",
+      "PowerShell(ls -Path \"D:\\\\coding2k26\\\\idocs-new\" -Attributes D | Where-Object {$_.Name -ne \"node_modules\"})"
+    ]
+  }
+}
