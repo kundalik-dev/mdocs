@@ -6,6 +6,7 @@ import {
   startServer,
 } from "@iprep/modcs-server";
 import { mdocsExists, reposDirExists, resolveDataDir } from "../lib/mdocs.js";
+import { isPortAvailable } from "../lib/port.js";
 import { runSetup } from "./setup.js";
 import { printBanner } from "../lib/banner.js";
 
@@ -30,6 +31,22 @@ export async function start(options: StartOptions): Promise<void> {
 
   if (!mdocsExists(cwd) || !reposDirExists(cwd)) {
     await runSetup(cwd);
+  }
+
+  // Pre-flight: check if the port is already in use before attempting to start
+  const portFree = await isPortAvailable(port, host);
+  if (!portFree) {
+    console.error(
+      chalk.red(
+        `\n  Port ${port} on ${host} is already in use.`,
+      ),
+    );
+    console.error(
+      chalk.dim(
+        `  Use ${chalk.bold("--port <port>")} to pick a different port, or stop the process already using ${host}:${port}.\n`,
+      ),
+    );
+    process.exit(1);
   }
 
   console.log(chalk.dim(`\n  Starting server on ${host}:${port}...\n`));

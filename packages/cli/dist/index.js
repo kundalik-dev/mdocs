@@ -414,6 +414,25 @@ function resolveDataDir(dataDir) {
   return isAbsolute(dataDir) ? dataDir : join5(process.cwd(), dataDir);
 }
 
+// src/lib/port.ts
+import { createServer } from "net";
+function isPortAvailable(port, host) {
+  return new Promise((resolve4) => {
+    const tester = createServer();
+    tester.once("error", (err) => {
+      if (err.code === "EADDRINUSE") {
+        resolve4(false);
+      } else {
+        resolve4(false);
+      }
+    });
+    tester.once("listening", () => {
+      tester.close(() => resolve4(true));
+    });
+    tester.listen(port, host);
+  });
+}
+
 // src/commands/setup.ts
 import chalk from "chalk";
 async function runSetup(cwd) {
@@ -447,17 +466,55 @@ async function start(options) {
   if (!mdocsExists(cwd) || !reposDirExists(cwd)) {
     await runSetup(cwd);
   }
+  const portFree = await isPortAvailable(port, host);
+  if (!portFree) {
+    console.error(
+      chalk2.red(
+        `
+  Port ${port} on ${host} is already in use.`
+      )
+    );
+    console.error(
+      chalk2.dim(
+        `  Use ${chalk2.bold("--port <port>")} to pick a different port, or stop the process already using ${host}:${port}.
+`
+      )
+    );
+    process.exit(1);
+  }
   console.log(chalk2.dim(`
   Starting server on ${host}:${port}...
 `));
   const origins = options.origin ? [options.origin, ...DEFAULT_ORIGINS] : DEFAULT_ORIGINS;
-  const server = await startServer({
-    port,
-    host,
-    dataDir: cwd,
-    origins,
-    githubToken: options.githubToken
-  });
+  let server;
+  try {
+    server = await startServer({
+      port,
+      host,
+      dataDir: cwd,
+      origins,
+      githubToken: options.githubToken
+    });
+  } catch (error) {
+    if (error instanceof Error && error.message.includes("EADDRINUSE")) {
+      console.error(
+        chalk2.red(
+          `Failed to start mDocs server: port ${port} is already in use.`
+        )
+      );
+      console.error(
+        chalk2.dim(
+          `Use a different port with --port <port> or stop the process already using ${host}:${port}.`
+        )
+      );
+    } else {
+      console.error(
+        chalk2.red("Failed to start mDocs server:"),
+        error instanceof Error ? error.message : error
+      );
+    }
+    process.exit(1);
+  }
   printBanner();
   console.log(
     chalk2.bold("  Server running at ") + chalk2.bold.underline.cyan(`http://${host}:${port}`)

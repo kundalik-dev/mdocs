@@ -11,7 +11,7 @@
     "paths": {
       "@iprep/modcs-server": ["../server/src/index.ts"]
     },
-    "ignoreDeprecations": "6.0",
+
     "skipLibCheck": true,
     "declaration": true,
     "sourceMap": true
