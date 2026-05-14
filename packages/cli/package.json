@@ -1,6 +1,6 @@
 {
   "name": "@iprep/mdocs",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "mDocs CLI — start the local documentation server",
   "type": "module",
   "bin": {

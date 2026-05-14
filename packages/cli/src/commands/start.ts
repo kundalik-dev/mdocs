@@ -10,7 +10,7 @@ import { findAvailablePort } from "../lib/port.js";
 import { runSetup } from "./setup.js";
 import { printBanner } from "../lib/banner.js";
 
-const VIEWER_URL = "https://mdocs-md-viewer.vercel.app/";
+const VIEWER_URL = "https://mdocs-reader.vercel.app/";
 
 export interface StartOptions {
   port: string;

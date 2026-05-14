@@ -10,6 +10,7 @@ export const REPOS_SUBDIR = "repos";
 export const DEFAULT_ORIGINS = [
   "http://localhost:3000",
   "http://127.0.0.1:3000",
+  "https://mdocs-reader.vercel.app",
   "https://mdocs-md-viewer.vercel.app",
 ];
 
