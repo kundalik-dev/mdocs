@@ -1,13 +1,13 @@
 # Publishing Guide
 
-Packages published to npm under the `@mdocs` scope:
+Packages published to npm:
 
 | Package         | Path              |
 | --------------- | ----------------- |
 | `@mdocs/server` | `packages/server` |
-| `@mdocs/cli`    | `packages/cli`    |
+| `mdocs`         | `packages/cli`    |
 
-**Order matters:** `@mdocs/server` must be published before `@mdocs/cli` because the CLI depends on it.
+**Order matters:** `@mdocs/server` must be published before `mdocs` because the CLI depends on it.
 
 ---
 
@@ -15,8 +15,10 @@ Packages published to npm under the `@mdocs` scope:
 
 - Node.js >= 18
 - pnpm >= 8
-- An npm account with access to the `@mdocs` scope
+- An npm account with access to publish `mdocs` and `@mdocs/server`
 - Logged in to npm (`npm whoami` should return your username)
+
+> **Name availability:** As of May 14, 2026, the unscoped `mdocs` package name is held on npm by the deprecated-package placeholder at `mdocs@1.0.0`. Publishing this CLI as `mdocs` requires npm to grant you access to that package name first. Until then, use `npx @mdocs/cli` or `npx -p @mdocs/cli mdocs`.
 
 ---
 
@@ -60,7 +62,7 @@ From the repo root:
 pnpm build
 ```
 
-This runs `@mdocs/server` build first, then `@mdocs/cli`. Both output to their respective `dist/` folders with JS and `.d.ts` declaration files.
+This runs `@mdocs/server` build first, then `mdocs`. Both output to their respective `dist/` folders with JS and `.d.ts` declaration files.
 
 ---
 
@@ -75,11 +77,11 @@ cd packages/server
 pnpm publish --dry-run --access public
 ```
 
-**`@mdocs/cli`:**
+**`mdocs`:**
 
 ```sh
 cd packages/cli
-pnpm publish --dry-run --access public
+pnpm publish --dry-run
 ```
 
 ### What to check in the dry-run output
@@ -97,7 +99,7 @@ package.json
 README.md   ← optional but recommended
 ```
 
-Expected `@mdocs/cli` tarball contents:
+Expected `mdocs` tarball contents:
 
 ```
 dist/index.js
@@ -123,17 +125,17 @@ npm info @mdocs/server
 
 ---
 
-## Step 6 — Publish `@mdocs/cli`
+## Step 6 — Publish `mdocs`
 
 ```sh
 cd packages/cli
-pnpm publish --access public
+pnpm publish
 ```
 
 Confirm the package is live:
 
 ```sh
-npm info @mdocs/cli
+npm info mdocs
 ```
 
 ---
@@ -143,7 +145,7 @@ npm info @mdocs/cli
 Test a clean global install:
 
 ```sh
-npm install -g @mdocs/cli
+npm install -g mdocs
 mdocs --version
 mdocs --help
 ```
@@ -151,7 +153,7 @@ mdocs --help
 Or test with `npx` without installing globally:
 
 ```sh
-npx @mdocs/cli --help
+npx mdocs --help
 ```
 
 ---
@@ -171,7 +173,7 @@ pnpm version minor
 pnpm version major
 ```
 
-Always bump `@mdocs/server` first, then update `@mdocs/cli`'s dependency version to match before bumping and publishing the CLI.
+Always bump `@mdocs/server` first, then update `mdocs`'s dependency version to match before bumping and publishing the CLI.
 
 ---
 
@@ -180,6 +182,7 @@ Always bump `@mdocs/server` first, then update `@mdocs/cli`'s dependency version
 | Error                      | Fix                                                                                      |
 | -------------------------- | ---------------------------------------------------------------------------------------- |
 | `403 Forbidden`            | You are not logged in or lack access to the `@mdocs` scope — run `npm login`             |
+| Cannot publish `mdocs`     | The unscoped package name is currently held by npm's deprecated-package placeholder — request access from npm support |
 | `402 Payment Required`     | The scope is private by default — pass `--access public`                                 |
 | `workspace:*` not resolved | Use `pnpm publish` (not `npm publish`) — pnpm replaces workspace protocols automatically |
 | Type errors during build   | Run `pnpm --filter @mdocs/server typecheck` to find the offending file                   |

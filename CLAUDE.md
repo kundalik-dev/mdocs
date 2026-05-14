@@ -8,7 +8,7 @@ Local documentation server monorepo. Users run `npx mdocs serve` to start a loca
 
 ```
 packages/
-  cli/      — @mdocs/cli     — the npx-able CLI binary
+  cli/      — mdocs          — the npx-able CLI binary
   server/   — @mdocs/server  — the Express HTTP server (library + standalone)
 apps/
   frontend/ — Next.js 16 viewer (React 19, Zustand 5, Tailwind, shadcn/base-ui)
@@ -37,7 +37,7 @@ pnpm dev:cli          # run cli in dev mode (tsx)
 cd apps/frontend && pnpm dev   # Next.js dev server on :3000
 ```
 
-`@mdocs/cli` depends on `@mdocs/server` via `workspace:*`. Always build server before cli.
+`mdocs` depends on `@mdocs/server` via `workspace:*`. Always build server before cli.
 
 ---
 
@@ -65,14 +65,14 @@ cd apps/frontend && pnpm dev   # Next.js dev server on :3000
 
 ## Publishing
 
-Both packages publish to npm under `@mdocs` scope. See `docs/PUBLISHING.md`.
+The server publishes under the `@mdocs` scope, while the CLI publishes as the unscoped `mdocs` package. See `docs/PUBLISHING.md`.
 
 ```sh
 cd packages/server && pnpm publish --access public
 cd packages/cli    && pnpm publish --access public
 ```
 
-Current versions: `@mdocs/server@0.1.1`, `@mdocs/cli@0.1.1`
+Current versions: `@mdocs/server@0.1.3`, `mdocs@0.1.3`
 
 ---
 

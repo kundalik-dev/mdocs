@@ -1,6 +1,6 @@
 # @mdocs/server — Claude Reference
 
-Local HTTP server that clones public/private GitHub repositories and serves their markdown files over a REST API. Used internally by `@mdocs/cli` and can be embedded in any Node.js app.
+Local HTTP server that clones public/private GitHub repositories and serves their markdown files over a REST API. Used internally by `mdocs` and can be embedded in any Node.js app.
 
 ## Key files
 

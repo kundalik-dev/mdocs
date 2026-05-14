@@ -1,15 +1,19 @@
 #!/usr/bin/env node
 
+import { readFileSync } from 'node:fs';
 import { Command } from 'commander';
 import { serve } from './commands/serve.js';
 import { runSetup } from './commands/setup.js';
 
 const program = new Command();
+const packageJson = JSON.parse(
+  readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
+) as { version: string };
 
 program
   .name('mdocs')
   .description('mDocs — local documentation server')
-  .version('0.1.0');
+  .version(packageJson.version);
 
 program
   .command('serve')

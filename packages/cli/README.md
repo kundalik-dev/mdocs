@@ -1,17 +1,17 @@
-# @mdocs/cli
+# mdocs
 
 Command-line interface for mDocs — spins up a local documentation server that serves markdown files from cloned GitHub repositories.
 
 ## Installation
 
 ```sh
-npm install -g @mdocs/cli
+npm install -g mdocs
 ```
 
 Or run without installing:
 
 ```sh
-npx @mdocs/cli <command>
+npx mdocs <command>
 ```
 
 ## Requirements

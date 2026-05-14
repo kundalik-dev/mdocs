@@ -1,6 +1,6 @@
-# @mdocs/cli — Claude Reference
+# mdocs CLI Reference
 
-CLI wrapper around `@mdocs/server`. Provides the `mdocs` binary with `serve` and `setup` commands. Published to npm as `@mdocs/cli`; users run it via `npx mdocs serve` or a global install.
+CLI wrapper around `@mdocs/server`. Provides the `mdocs` binary with `serve` and `setup` commands. Published to npm as `mdocs`; users run it via `npx mdocs serve` or a global install.
 
 ## Key files
 

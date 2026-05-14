@@ -245,4 +245,4 @@ import type { Config, RepoMeta, FileRef, FileContent } from '@mdocs/server';
 
 ## Related packages
 
-- [`@mdocs/cli`](https://www.npmjs.com/package/@mdocs/cli) — CLI wrapper around this server
+- [`mdocs`](https://www.npmjs.com/package/mdocs) — CLI wrapper around this server

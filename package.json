@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.3",
   "scripts": {
-    "build": "pnpm --filter @mdocs/server build && pnpm --filter @mdocs/cli build",
+    "build": "pnpm --filter @mdocs/server build && pnpm --filter mdocs build",
     "dev:server": "pnpm --filter @mdocs/server dev",
-    "dev:cli": "pnpm --filter @mdocs/cli dev",
+    "dev:cli": "pnpm --filter mdocs dev",
     "build:server": "pnpm --filter @mdocs/server build",
-    "build:cli": "pnpm --filter @mdocs/cli build",
-    "serve": "pnpm build:server && pnpm --filter @mdocs/cli dev:serve"
+    "build:cli": "pnpm --filter mdocs build",
+    "serve": "pnpm build:server && pnpm --filter mdocs dev:serve"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
