@@ -1,5 +1,5 @@
 {
-  "name": "@mdocs/cli",
+  "name": "mdocs",
   "version": "0.1.3",
   "description": "mDocs CLI — start the local documentation server",
   "type": "module",
