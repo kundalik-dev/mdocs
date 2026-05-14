@@ -416,6 +416,7 @@ function resolveDataDir(dataDir) {
 
 // src/lib/port.ts
 import { createServer } from "net";
+var MAX_PORT_ATTEMPTS = 10;
 function isPortAvailable(port, host) {
   return new Promise((resolve4) => {
     const tester = createServer();
@@ -431,6 +432,14 @@ function isPortAvailable(port, host) {
     });
     tester.listen(port, host);
   });
+}
+async function findAvailablePort(startPort, host) {
+  for (let port = startPort; port < startPort + MAX_PORT_ATTEMPTS; port++) {
+    if (await isPortAvailable(port, host)) {
+      return port;
+    }
+  }
+  return null;
 }
 
 // src/commands/setup.ts
@@ -458,29 +467,37 @@ function printBanner() {
 var VIEWER_URL = "https://mdocs-md-viewer.vercel.app/";
 async function start(options) {
   const cwd = resolveDataDir(options.dataDir);
-  const port = parseInt(options.port, 10);
+  const requestedPort = parseInt(options.port, 10);
   const host = options.host;
-  if (Number.isNaN(port)) {
+  if (Number.isNaN(requestedPort)) {
     throw new Error(`Invalid port: ${options.port}`);
   }
   if (!mdocsExists(cwd) || !reposDirExists(cwd)) {
     await runSetup(cwd);
   }
-  const portFree = await isPortAvailable(port, host);
-  if (!portFree) {
+  const port = await findAvailablePort(requestedPort, host);
+  if (port === null) {
     console.error(
       chalk2.red(
         `
-  Port ${port} on ${host} is already in use.`
+  Could not find a free port (tried ${requestedPort}\u2013${requestedPort + 19}).`
       )
     );
     console.error(
       chalk2.dim(
-        `  Use ${chalk2.bold("--port <port>")} to pick a different port, or stop the process already using ${host}:${port}.
+        `  Use ${chalk2.bold("--port <port>")} to specify a different starting port, or stop existing processes.
 `
       )
     );
     process.exit(1);
+  }
+  if (port !== requestedPort) {
+    console.log(
+      chalk2.yellow(
+        `
+  Port ${requestedPort} is in use \u2014 using port ${port} instead.`
+      )
+    );
   }
   console.log(chalk2.dim(`
   Starting server on ${host}:${port}...
@@ -496,23 +513,10 @@ async function start(options) {
       githubToken: options.githubToken
     });
   } catch (error) {
-    if (error instanceof Error && error.message.includes("EADDRINUSE")) {
-      console.error(
-        chalk2.red(
-          `Failed to start mDocs server: port ${port} is already in use.`
-        )
-      );
-      console.error(
-        chalk2.dim(
-          `Use a different port with --port <port> or stop the process already using ${host}:${port}.`
-        )
-      );
-    } else {
-      console.error(
-        chalk2.red("Failed to start mDocs server:"),
-        error instanceof Error ? error.message : error
-      );
-    }
+    console.error(
+      chalk2.red("Failed to start mDocs server:"),
+      error instanceof Error ? error.message : error
+    );
     process.exit(1);
   }
   printBanner();

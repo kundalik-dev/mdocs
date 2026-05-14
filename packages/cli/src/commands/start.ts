@@ -6,7 +6,7 @@ import {
   startServer,
 } from "@iprep/modcs-server";
 import { mdocsExists, reposDirExists, resolveDataDir } from "../lib/mdocs.js";
-import { isPortAvailable } from "../lib/port.js";
+import { findAvailablePort } from "../lib/port.js";
 import { runSetup } from "./setup.js";
 import { printBanner } from "../lib/banner.js";
 
@@ -22,10 +22,10 @@ export interface StartOptions {
 
 export async function start(options: StartOptions): Promise<void> {
   const cwd = resolveDataDir(options.dataDir);
-  const port = parseInt(options.port, 10);
+  const requestedPort = parseInt(options.port, 10);
   const host = options.host;
 
-  if (Number.isNaN(port)) {
+  if (Number.isNaN(requestedPort)) {
     throw new Error(`Invalid port: ${options.port}`);
   }
 
@@ -33,20 +33,28 @@ export async function start(options: StartOptions): Promise<void> {
     await runSetup(cwd);
   }
 
-  // Pre-flight: check if the port is already in use before attempting to start
-  const portFree = await isPortAvailable(port, host);
-  if (!portFree) {
+  // Pre-flight: find a free port, auto-incrementing from the requested one
+  const port = await findAvailablePort(requestedPort, host);
+  if (port === null) {
     console.error(
       chalk.red(
-        `\n  Port ${port} on ${host} is already in use.`,
+        `\n  Could not find a free port (tried ${requestedPort}–${requestedPort + 19}).`,
       ),
     );
     console.error(
       chalk.dim(
-        `  Use ${chalk.bold("--port <port>")} to pick a different port, or stop the process already using ${host}:${port}.\n`,
+        `  Use ${chalk.bold("--port <port>")} to specify a different starting port, or stop existing processes.\n`,
       ),
     );
     process.exit(1);
+  }
+
+  if (port !== requestedPort) {
+    console.log(
+      chalk.yellow(
+        `\n  Port ${requestedPort} is in use — using port ${port} instead.`,
+      ),
+    );
   }
 
   console.log(chalk.dim(`\n  Starting server on ${host}:${port}...\n`));
@@ -66,23 +74,10 @@ export async function start(options: StartOptions): Promise<void> {
       githubToken: options.githubToken,
     });
   } catch (error: unknown) {
-    if (error instanceof Error && error.message.includes("EADDRINUSE")) {
-      console.error(
-        chalk.red(
-          `Failed to start mDocs server: port ${port} is already in use.`,
-        ),
-      );
-      console.error(
-        chalk.dim(
-          `Use a different port with --port <port> or stop the process already using ${host}:${port}.`,
-        ),
-      );
-    } else {
-      console.error(
-        chalk.red("Failed to start mDocs server:"),
-        error instanceof Error ? error.message : error,
-      );
-    }
+    console.error(
+      chalk.red("Failed to start mDocs server:"),
+      error instanceof Error ? error.message : error,
+    );
     process.exit(1);
   }
 
