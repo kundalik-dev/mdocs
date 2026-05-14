@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "dev": "tsx src/index.ts",
+    "dev": "tsx src/standalone.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -8,10 +8,6 @@ import { Command } from "commander";
 import chalk2 from "chalk";
 import open from "open";
 
-// ../server/src/index.ts
-import { fileURLToPath } from "url";
-import { resolve as resolve3 } from "path";
-
 // ../server/src/app.ts
 import express from "express";
 
@@ -55,8 +51,7 @@ var REPOS_SUBDIR = "repos";
 var DEFAULT_ORIGINS = [
   "http://localhost:3000",
   "http://127.0.0.1:3000",
-  "https://mdocs-reader.vercel.app",
-  "https://mdocs-md-viewer.vercel.app"
+  "https://mdocs-reader.vercel.app"
 ];
 function parseConfig(overrides = {}) {
   return {
@@ -88,7 +83,7 @@ function validateGitHubUrl(url) {
 // ../server/src/services/git.ts
 import { spawn } from "child_process";
 function run(args, cwd) {
-  return new Promise((resolve4, reject) => {
+  return new Promise((resolve3, reject) => {
     const proc = spawn("git", args, {
       cwd,
       stdio: ["ignore", "pipe", "pipe"]
@@ -98,7 +93,7 @@ function run(args, cwd) {
     proc.stdout.on("data", (chunk) => stdout += chunk.toString());
     proc.stderr.on("data", (chunk) => stderr += chunk.toString());
     proc.on("close", (code) => {
-      if (code === 0) resolve4(stdout.trim());
+      if (code === 0) resolve3(stdout.trim());
       else reject(new Error(stderr.trim() || `git exited with code ${code}`));
     });
     proc.on("error", (err) => {
@@ -383,17 +378,6 @@ async function startServer(overrides = {}) {
     server.on("error", reject);
   });
 }
-var __filename2 = fileURLToPath(import.meta.url);
-var isMain = process.argv[1] !== void 0 && resolve3(process.argv[1]) === resolve3(__filename2);
-if (isMain) {
-  const config = parseConfig();
-  startServer(config).then(() => {
-    console.log(`mDocs server listening at http://${config.host}:${config.port}`);
-  }).catch((err) => {
-    console.error("Failed to start server:", err.message);
-    process.exit(1);
-  });
-}
 
 // src/lib/mdocs.ts
 import { existsSync as existsSync3, mkdirSync as mkdirSync2 } from "fs";
@@ -419,17 +403,17 @@ function resolveDataDir(dataDir) {
 import { createServer } from "net";
 var MAX_PORT_ATTEMPTS = 10;
 function isPortAvailable(port, host) {
-  return new Promise((resolve4) => {
+  return new Promise((resolve3) => {
     const tester = createServer();
     tester.once("error", (err) => {
       if (err.code === "EADDRINUSE") {
-        resolve4(false);
+        resolve3(false);
       } else {
-        resolve4(false);
+        resolve3(false);
       }
     });
     tester.once("listening", () => {
-      tester.close(() => resolve4(true));
+      tester.close(() => resolve3(true));
     });
     tester.listen(port, host);
   });

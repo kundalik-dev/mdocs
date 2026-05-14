@@ -19,19 +19,3 @@ export async function startServer(overrides: Partial<Config> = {}): Promise<Serv
   });
 }
 
-// Run standalone when executed directly (node dist/index.js or tsx src/index.ts)
-const __filename = fileURLToPath(import.meta.url);
-const isMain =
-  process.argv[1] !== undefined && resolve(process.argv[1]) === resolve(__filename);
-
-if (isMain) {
-  const config = parseConfig();
-  startServer(config)
-    .then(() => {
-      console.log(`mDocs server listening at http://${config.host}:${config.port}`);
-    })
-    .catch((err: Error) => {
-      console.error('Failed to start server:', err.message);
-      process.exit(1);
-    });
-}
