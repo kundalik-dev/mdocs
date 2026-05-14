@@ -1,6 +1,6 @@
-# mDocs Server API
+﻿# mDocs Server API
 
-Base URL: `http://127.0.0.1:4873`
+Base URL: `http://127.0.0.1:5540`
 
 ---
 
@@ -12,12 +12,12 @@ Returns server status. Use this to check if the server is running before connect
 
 **Response**
 ```json
-{ "ok": true, "name": "mdocs-server", "version": "0.1.0" }
+{ "ok": true, "name": "modcs-server", "version": "0.1.4" }
 ```
 
 **Test**
 ```bash
-curl http://127.0.0.1:4873/health
+curl http://127.0.0.1:5540/health
 ```
 
 ---
@@ -46,7 +46,7 @@ List all cloned repositories.
 
 **Test**
 ```bash
-curl http://127.0.0.1:4873/api/repos
+curl http://127.0.0.1:5540/api/repos
 ```
 
 ---
@@ -66,7 +66,7 @@ Clone a public GitHub repository. The repo is stored under `.mdocs/repos/<uuid>/
 
 **Test**
 ```bash
-curl -X POST http://127.0.0.1:4873/api/repos/clone \
+curl -X POST http://127.0.0.1:5540/api/repos/clone \
   -H "Content-Type: application/json" \
   -d '{"url":"https://github.com/sindresorhus/awesome"}'
 ```
@@ -88,7 +88,7 @@ Pull latest changes for an existing repo (`git pull --ff-only`), rescan markdown
 **Test**
 ```bash
 # replace <id> with the uuid from /api/repos
-curl -X POST http://127.0.0.1:4873/api/repos/<id>/sync
+curl -X POST http://127.0.0.1:5540/api/repos/<id>/sync
 ```
 
 ---
@@ -101,7 +101,7 @@ Remove a cloned repo — deletes both the clone folder and the `.json` metadata 
 
 **Test**
 ```bash
-curl -X DELETE http://127.0.0.1:4873/api/repos/<id>
+curl -X DELETE http://127.0.0.1:5540/api/repos/<id>
 ```
 
 ---
@@ -128,7 +128,7 @@ List all markdown files (`.md`, `.mdx`, `.markdown`) found in the repo. Ignores 
 
 **Test**
 ```bash
-curl http://127.0.0.1:4873/api/repos/<id>/files
+curl http://127.0.0.1:5540/api/repos/<id>/files
 ```
 
 ---
@@ -152,8 +152,8 @@ Read a single markdown file by its relative path. The path may include subdirect
 
 **Test**
 ```bash
-curl "http://127.0.0.1:4873/api/repos/<id>/files/README.md"
-curl "http://127.0.0.1:4873/api/repos/<id>/files/docs/intro.md"
+curl "http://127.0.0.1:5540/api/repos/<id>/files/README.md"
+curl "http://127.0.0.1:5540/api/repos/<id>/files/docs/intro.md"
 ```
 
 **Errors**
@@ -166,7 +166,7 @@ curl "http://127.0.0.1:4873/api/repos/<id>/files/docs/intro.md"
 
 ## Storage layout
 
-All data lives inside `.mdocs/` in the directory where `mdocs serve` was run:
+All data lives inside `.mdocs/` in the directory where `modcs start` was run:
 
 ```
 .mdocs/
@@ -182,17 +182,17 @@ No database is used. Each JSON file is the source of truth for that repo's metad
 ## Running the server
 
 ```bash
-# Start with defaults (127.0.0.1:4873)
-npx mdocs serve
+# Start with defaults (127.0.0.1:5540)
+npx @iprep/mdocs start
 
 # Custom port / host
-npx mdocs serve --port 5000 --host localhost
+npx @iprep/mdocs start --port 5000 --host localhost
 
 # Custom data directory (where .mdocs/ will be created)
-npx mdocs serve --data-dir /path/to/project
+npx @iprep/mdocs start --data-dir /path/to/project
 
 # Allow a custom frontend origin
-npx mdocs serve --origin http://localhost:4000
+npx @iprep/mdocs start --origin http://localhost:4000
 ```
 
 Default allowed CORS origins:

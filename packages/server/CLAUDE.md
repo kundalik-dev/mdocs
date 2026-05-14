@@ -1,6 +1,6 @@
-# @mdocs/server — Claude Reference
+﻿# @iprep/modcs-server — Claude Reference
 
-Local HTTP server that clones public/private GitHub repositories and serves their markdown files over a REST API. Used internally by `mdocs` and can be embedded in any Node.js app.
+Local HTTP server that clones public/private GitHub repositories and serves their markdown files over a REST API. Used internally by `@iprep/mdocs` and can be embedded in any Node.js app.
 
 ## Key files
 
@@ -30,7 +30,7 @@ All config flows through `parseConfig(overrides?)` → `Config`.
 
 | Field | Env var | Default |
 |---|---|---|
-| `port` | `PORT` | `4873` |
+| `port` | `PORT` | `5540` |
 | `host` | `HOST` | `127.0.0.1` |
 | `dataDir` | `DATA_DIR` | `os.homedir()` |
 | `origins` | — | localhost:3000, 127.0.0.1:3000, idocs-md-viewer.vercel.app |
@@ -69,10 +69,10 @@ GET    /api/repos/:id/files/:path
 ## Programmatic usage
 
 ```ts
-import { startServer, createApp, parseConfig } from '@mdocs/server';
+import { startServer, createApp, parseConfig } from '@iprep/modcs-server';
 
 // Simple
-const server = await startServer({ port: 4873, githubToken: process.env.GITHUB_TOKEN });
+const server = await startServer({ port: 5540, githubToken: process.env.GITHUB_TOKEN });
 
 // Custom (testing)
 const config = parseConfig({ port: 0 });

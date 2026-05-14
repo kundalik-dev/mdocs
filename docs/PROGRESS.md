@@ -1,4 +1,4 @@
----
+﻿---
 title: mDocs Build Progress
 description: Live tracker for the mDocs monorepo — CLI and server packages.
 author: Claude (with kundalik)
@@ -18,12 +18,12 @@ Current state of the two active packages: `packages/cli` and `packages/server`.
 
 - [x] Monorepo scaffold — `pnpm-workspace.yaml`, root `package.json`
 - [x] CLI package with `tsup` build, `tsx` dev workflow
-- [x] `mdocs serve` command — `--port`, `--host`, `--data-dir`, `--origin` flags
-- [x] `mdocs setup` command — creates `.mdocs/repos/` in target directory
-- [x] Auto-detects missing `.mdocs/` on `serve` and prompts to initialize (inquirer)
+- [x] `modcs start` command — `--port`, `--host`, `--data-dir`, `--origin` flags
+- [x] `modcs setup` command — creates `.mdocs/repos/` in target directory
+- [x] Auto-detects missing `.mdocs/` on `start` and prompts to initialize (inquirer)
 - [x] Gradient `mDocs` ASCII banner on server start (figlet ANSI Shadow + gradient-string)
 - [x] SIGINT handler — clean shutdown message on Ctrl+C
-- [x] Integrated with `@mdocs/server` — calls `startServer()` directly
+- [x] Integrated with `@iprep/modcs-server` — calls `startServer()` directly
 
 ### Stack
 
@@ -38,7 +38,7 @@ Current state of the two active packages: `packages/cli` and `packages/server`.
 
 ### Done
 
-- [x] Express 4 HTTP server bound to `127.0.0.1:4873` by default
+- [x] Express 4 HTTP server bound to `127.0.0.1:5540` by default
 - [x] `GET /health` — health check endpoint
 - [x] `GET /api/repos` — list all cloned repositories
 - [x] `POST /api/repos/clone` — clone a public GitHub repo into `.mdocs/repos/<uuid>/`
@@ -64,7 +64,7 @@ Current state of the two active packages: `packages/cli` and `packages/server`.
 
 ## Next up
 
-- [ ] Frontend integration — connect the existing web viewer to `http://127.0.0.1:4873`
+- [ ] Frontend integration — connect the existing web viewer to `http://127.0.0.1:5540`
 - [ ] `GET /health` polling in the frontend to detect server presence
 - [ ] Clone UI — GitHub URL input shown when server is connected
 - [ ] Show cloned repos in the sidebar alongside browser-fs sources

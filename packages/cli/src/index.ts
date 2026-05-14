@@ -2,7 +2,7 @@
 
 import { readFileSync } from 'node:fs';
 import { Command } from 'commander';
-import { serve } from './commands/serve.js';
+import { DEFAULT_START_PORT, start } from './commands/start.js';
 import { runSetup } from './commands/setup.js';
 
 const program = new Command();
@@ -11,19 +11,19 @@ const packageJson = JSON.parse(
 ) as { version: string };
 
 program
-  .name('mdocs')
+  .name('modcs')
   .description('mDocs — local documentation server')
   .version(packageJson.version);
 
 program
-  .command('serve')
+  .command('start')
   .description('Start the mDocs local server')
-  .option('-p, --port <port>', 'Port to listen on', '4873')
+  .option('-p, --port <port>', 'Port to listen on', DEFAULT_START_PORT)
   .option('-H, --host <host>', 'Host to bind to', '127.0.0.1')
   .option('-d, --data-dir <dir>', 'Directory that holds (or will hold) .mdocs/')
   .option('-o, --origin <origin>', 'Allowed CORS origin')
   .option('-t, --github-token <token>', 'GitHub PAT for cloning private repositories (or set GITHUB_TOKEN env var)')
-  .action(serve);
+  .action(start);
 
 program
   .command('setup')

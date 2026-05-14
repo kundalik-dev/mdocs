@@ -1,6 +1,6 @@
-# mdocs CLI Reference
+﻿# @iprep/mdocs CLI Reference
 
-CLI wrapper around `@mdocs/server`. Provides the `mdocs` binary with `serve` and `setup` commands. Published to npm as `mdocs`; users run it via `npx mdocs serve` or a global install.
+CLI wrapper around `@iprep/modcs-server`. Provides the `modcs` binary with `start` and `setup` commands. Published to npm as `@iprep/mdocs`; users run it via `npx @iprep/mdocs start` or a global install.
 
 ## Key files
 
@@ -9,7 +9,7 @@ src/
   index.ts           — commander program, command definitions + options
   types.ts           — RepoMeta (local mirror of server type)
   commands/
-    serve.ts         — serve command handler (start server, open browser)
+    start.ts         — start command handler (start server, open browser)
     setup.ts         — setup command handler (create .mdocs/ structure)
   lib/
     mdocs.ts         — filesystem helpers: resolveDataDir, createMdocsStructure, etc.
@@ -18,10 +18,10 @@ src/
 
 ## Commands
 
-### `mdocs serve`
+### `modcs start`
 
 ```
--p, --port <port>           Port (default: 4873)
+-p, --port <port>           Port (default: 5540)
 -H, --host <host>           Host (default: 127.0.0.1)
 -d, --data-dir <dir>        Override dataDir (default: homedir())
 -o, --origin <origin>       Extra CORS origin to allow
@@ -31,18 +31,18 @@ src/
 **Behaviour:**
 1. Resolves `dataDir` via `resolveDataDir(options.dataDir)` — defaults to `os.homedir()`
 2. Silently creates `~/.mdocs/repos/` if missing (no prompt)
-3. Starts `@mdocs/server`
+3. Starts `@iprep/modcs-server`
 4. Prints banner + server URL to stdout
 5. Opens `https://idocs-md-viewer.vercel.app/` in the default browser via `open`
 6. Handles `SIGINT` for clean shutdown
 
-### `mdocs setup`
+### `modcs setup`
 
 ```
 -d, --data-dir <dir>   Target directory (default: homedir())
 ```
 
-Creates `<dataDir>/.mdocs/repos/` recursively. Used internally by `serve` — rarely called directly.
+Creates `<dataDir>/.mdocs/repos/` recursively. Used internally by `start` — rarely called directly.
 
 ## Key helpers (`lib/mdocs.ts`)
 
@@ -55,16 +55,16 @@ Creates `<dataDir>/.mdocs/repos/` recursively. Used internally by `serve` — ra
 
 ## Important decisions
 
-- **`dataDir` always defaults to `homedir()`** — repos are global to the user, not tied to the directory `mdocs serve` is run from. This means one `.mdocs/` at `~/.mdocs/` regardless of project.
-- **No setup prompt** — if `.mdocs/` is missing, `serve` silently runs `runSetup()` and continues. The old `inquirer` confirm prompt was removed; `inquirer` dependency dropped entirely.
+- **`dataDir` always defaults to `homedir()`** — repos are global to the user, not tied to the directory `modcs start` is run from. This means one `.mdocs/` at `~/.mdocs/` regardless of project.
+- **No setup prompt** — if `.mdocs/` is missing, `start` silently runs `runSetup()` and continues. The old `inquirer` confirm prompt was removed; `inquirer` dependency dropped entirely.
 - **Browser auto-open** — `open(VIEWER_URL)` is called after the server is confirmed listening. Uses the `open` npm package (cross-platform: `start` on Windows, `open` on macOS, `xdg-open` on Linux). `void` is used since we don't await it.
-- **GitHub token** — passed through to `startServer({ githubToken })`. Can also be set via `GITHUB_TOKEN` env var (handled in `@mdocs/server`'s `parseConfig`).
+- **GitHub token** — passed through to `startServer({ githubToken })`. Can also be set via `GITHUB_TOKEN` env var (handled in `@iprep/modcs-server`'s `parseConfig`).
 
 ## Dependencies
 
 | Package | Why |
 |---|---|
-| `@mdocs/server` | The actual HTTP server |
+| `@iprep/modcs-server` | The actual HTTP server |
 | `commander` | CLI argument parsing |
 | `chalk` | Terminal colours |
 | `open` | Cross-platform browser launcher |

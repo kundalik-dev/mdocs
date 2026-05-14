@@ -1,17 +1,17 @@
-# mdocs
+﻿# @iprep/mdocs
 
 Command-line interface for mDocs — spins up a local documentation server that serves markdown files from cloned GitHub repositories.
 
 ## Installation
 
 ```sh
-npm install -g mdocs
+npm install -g @iprep/mdocs
 ```
 
 Or run without installing:
 
 ```sh
-npx mdocs <command>
+npx @iprep/mdocs start
 ```
 
 ## Requirements
@@ -21,12 +21,12 @@ npx mdocs <command>
 
 ## Commands
 
-### `mdocs setup`
+### `modcs setup`
 
 Initializes the `.mdocs/` project structure in the target directory.
 
 ```sh
-mdocs setup [options]
+modcs setup [options]
 ```
 
 | Option | Description | Default |
@@ -39,17 +39,17 @@ Creates:
 └── repos/
 ```
 
-### `mdocs serve`
+### `modcs start`
 
-Starts the mDocs local HTTP server. If `.mdocs/` does not exist, you will be prompted to initialize it first.
+Starts the mDocs local HTTP server. If `.mdocs/` does not exist, it is initialized automatically.
 
 ```sh
-mdocs serve [options]
+modcs start [options]
 ```
 
 | Option | Description | Default |
 |---|---|---|
-| `-p, --port <port>` | Port to listen on | `4873` |
+| `-p, --port <port>` | Port to listen on | `5540` |
 | `-H, --host <host>` | Host to bind to | `127.0.0.1` |
 | `-d, --data-dir <dir>` | Directory containing `.mdocs/` | current working directory |
 | `-o, --origin <origin>` | Extra CORS origin to allow | — |
@@ -58,40 +58,40 @@ mdocs serve [options]
 
 ```sh
 # Start with defaults
-mdocs serve
+modcs start
 
 # Custom port
-mdocs serve --port 5000
+modcs start --port 5000
 
 # Allow a custom frontend origin
-mdocs serve --origin http://localhost:5173
+modcs start --origin http://localhost:5173
 
 # Point at a specific data directory
-mdocs serve --data-dir /path/to/project
+modcs start --data-dir /path/to/project
 ```
 
-Once running, the server is available at `http://127.0.0.1:4873` by default.
+Once running, the server is available at `http://127.0.0.1:5540` by default.
 
 ## Typical workflow
 
 ```sh
 # 1. Initialize in your project
 cd my-project
-mdocs setup
+modcs setup
 
 # 2. Start the server
-mdocs serve
+modcs start
 
 # 3. Use the REST API to clone a repo and browse its docs
-curl -X POST http://127.0.0.1:4873/api/repos/clone \
+curl -X POST http://127.0.0.1:5540/api/repos/clone \
   -H "Content-Type: application/json" \
   -d '{"url": "https://github.com/owner/repo"}'
 ```
 
 ## REST API
 
-The CLI delegates all HTTP logic to `@mdocs/server`. See the [`@mdocs/server` README](../server/README.md) for the full API reference.
+The CLI delegates all HTTP logic to `@iprep/modcs-server`. See the [`@iprep/modcs-server` README](../server/README.md) for the full API reference.
 
 ## Related packages
 
-- [`@mdocs/server`](https://www.npmjs.com/package/@mdocs/server) — the underlying HTTP server (used internally by this CLI)
+- [`@iprep/modcs-server`](https://www.npmjs.com/package/@iprep/modcs-server) — the underlying HTTP server (used internally by this CLI)

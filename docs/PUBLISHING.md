@@ -1,13 +1,13 @@
-# Publishing Guide
+﻿# Publishing Guide
 
 Packages published to npm:
 
 | Package         | Path              |
 | --------------- | ----------------- |
-| `@mdocs/server` | `packages/server` |
-| `mdocs`         | `packages/cli`    |
+| `@iprep/modcs-server` | `packages/server` |
+| `@iprep/mdocs` | `packages/cli`    |
 
-**Order matters:** `@mdocs/server` must be published before `mdocs` because the CLI depends on it.
+**Order matters:** `@iprep/modcs-server` must be published before `@iprep/mdocs` because the CLI depends on it.
 
 ---
 
@@ -15,10 +15,10 @@ Packages published to npm:
 
 - Node.js >= 18
 - pnpm >= 8
-- An npm account with access to publish `mdocs` and `@mdocs/server`
+- An npm account with access to publish `@iprep/mdocs` and `@iprep/modcs-server`
 - Logged in to npm (`npm whoami` should return your username)
 
-> **Name availability:** As of May 14, 2026, the unscoped `mdocs` package name is held on npm by the deprecated-package placeholder at `mdocs@1.0.0`. Publishing this CLI as `mdocs` requires npm to grant you access to that package name first. Until then, use `npx @mdocs/cli` or `npx -p @mdocs/cli mdocs`.
+> **Package names:** The CLI now publishes as `@iprep/mdocs` and installs the `modcs` binary.
 
 ---
 
@@ -40,7 +40,7 @@ Check which packages you have access to (npm v9+):
 npm access list packages
 ```
 
-> **Note:** `npm access list packages @mdocs` was removed in npm v9. Use the command above and look for `@mdocs/*` entries. If the scope has never been published to, it won't appear yet — that's expected on a first publish.
+> **Note:** `npm access list packages @iprep` was removed in npm v9. Use the command above and look for `@iprep/*` entries. If the scope has never been published to, it won't appear yet — that's expected on a first publish.
 
 ---
 
@@ -62,7 +62,7 @@ From the repo root:
 pnpm build
 ```
 
-This runs `@mdocs/server` build first, then `mdocs`. Both output to their respective `dist/` folders with JS and `.d.ts` declaration files.
+This runs `@iprep/modcs-server` build first, then `@iprep/mdocs`. Both output to their respective `dist/` folders with JS and `.d.ts` declaration files.
 
 ---
 
@@ -70,14 +70,14 @@ This runs `@mdocs/server` build first, then `mdocs`. Both output to their respec
 
 Run a dry run for each package to see exactly which files will be included in the tarball without actually publishing.
 
-**`@mdocs/server`:**
+**`@iprep/modcs-server`:**
 
 ```sh
 cd packages/server
 pnpm publish --dry-run --access public
 ```
 
-**`mdocs`:**
+**`@iprep/mdocs`:**
 
 ```sh
 cd packages/cli
@@ -88,9 +88,9 @@ pnpm publish --dry-run
 
 - Only `dist/` files are listed — no `src/`, `tsup.config.ts`, or other dev files
 - The version number is correct
-- `@mdocs/server`'s `workspace:*` dependency is replaced with the actual semver (e.g. `0.1.0`)
+- `@iprep/modcs-server`'s `workspace:*` dependency is replaced with the actual semver (e.g. `0.1.0`)
 
-Expected `@mdocs/server` tarball contents:
+Expected `@iprep/modcs-server` tarball contents:
 
 ```
 dist/index.js
@@ -99,7 +99,7 @@ package.json
 README.md   ← optional but recommended
 ```
 
-Expected `mdocs` tarball contents:
+Expected `@iprep/mdocs` tarball contents:
 
 ```
 dist/index.js
@@ -110,7 +110,7 @@ README.md   ← optional but recommended
 
 ---
 
-## Step 5 — Publish `@mdocs/server`
+## Step 5 — Publish `@iprep/modcs-server`
 
 ```sh
 cd packages/server
@@ -120,12 +120,12 @@ pnpm publish --access public
 Confirm the package is live:
 
 ```sh
-npm info @mdocs/server
+npm info @iprep/modcs-server
 ```
 
 ---
 
-## Step 6 — Publish `mdocs`
+## Step 6 — Publish `@iprep/mdocs`
 
 ```sh
 cd packages/cli
@@ -135,7 +135,7 @@ pnpm publish
 Confirm the package is live:
 
 ```sh
-npm info mdocs
+npm info @iprep/mdocs
 ```
 
 ---
@@ -145,15 +145,15 @@ npm info mdocs
 Test a clean global install:
 
 ```sh
-npm install -g mdocs
-mdocs --version
-mdocs --help
+npm install -g @iprep/mdocs
+modcs --version
+modcs --help
 ```
 
 Or test with `npx` without installing globally:
 
 ```sh
-npx mdocs --help
+npx @iprep/mdocs --help
 ```
 
 ---
@@ -173,7 +173,7 @@ pnpm version minor
 pnpm version major
 ```
 
-Always bump `@mdocs/server` first, then update `mdocs`'s dependency version to match before bumping and publishing the CLI.
+Always bump `@iprep/modcs-server` first, then update `@iprep/mdocs`'s dependency version to match before bumping and publishing the CLI.
 
 ---
 
@@ -181,9 +181,9 @@ Always bump `@mdocs/server` first, then update `mdocs`'s dependency version to m
 
 | Error                      | Fix                                                                                      |
 | -------------------------- | ---------------------------------------------------------------------------------------- |
-| `403 Forbidden`            | You are not logged in or lack access to the `@mdocs` scope — run `npm login`             |
-| Cannot publish `mdocs`     | The unscoped package name is currently held by npm's deprecated-package placeholder — request access from npm support |
+| `403 Forbidden`            | You are not logged in or lack access to the `@iprep` scope — run `npm login`             |
+| Cannot publish `@iprep/mdocs`     | Confirm your npm user has publish access to the `@iprep` scope |
 | `402 Payment Required`     | The scope is private by default — pass `--access public`                                 |
 | `workspace:*` not resolved | Use `pnpm publish` (not `npm publish`) — pnpm replaces workspace protocols automatically |
-| Type errors during build   | Run `pnpm --filter @mdocs/server typecheck` to find the offending file                   |
-| `npm access list packages @mdocs` errors | Command removed in npm v9 — use `npm access list packages` instead |
+| Type errors during build   | Run `pnpm --filter @iprep/modcs-server typecheck` to find the offending file                   |
+| `npm access list packages @iprep` errors | Command removed in npm v9 — use `npm access list packages` instead |

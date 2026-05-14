@@ -1,9 +1,9 @@
-# mDocs Hybrid Architecture
+﻿# mDocs Hybrid Architecture
 
 mDocs should support two document sources side by side:
 
 1. Browser File API mode, which already exists and reads local files through the File System Access API.
-2. Local backend mode, where the user runs `npx mdocs server` and the deployed Vercel frontend talks to `http://127.0.0.1:<port>`.
+2. Local backend mode, where the user runs `npx @iprep/mdocs start` and the deployed Vercel frontend talks to `http://127.0.0.1:<port>`.
 
 The goal is to keep the current private, browser-only workflow working while adding a stronger local server workflow for Git clone, Git pull, repo indexing, and markdown APIs.
 
@@ -24,8 +24,8 @@ Browser File API source
   - Existing IndexedDB persistence remains
 
 Local mDocs server
-  http://127.0.0.1:4873
-  - Started by `npx mdocs server`
+  http://127.0.0.1:5540
+  - Started by `npx @iprep/mdocs start`
   - Owns filesystem and git operations
   - Stores cloned repos under `.mdocs`
   - Exposes HTTP APIs consumed by the frontend
@@ -49,7 +49,7 @@ mdocs/
       src/
         index.ts
         commands/
-          serve.ts
+          start.ts
           setup.ts
         lib/
           banner.ts
@@ -80,7 +80,7 @@ mdocs/
 Ownership:
 
 - `packages/server` owns localhost HTTP APIs, git operations, repo scans, and `.mdocs` storage.
-- `packages/cli` owns the `npx mdocs serve` command, `.mdocs` initialization, and delegates server startup to `packages/server`.
+- `packages/cli` owns the `npx @iprep/mdocs start` command, `.mdocs` initialization, and delegates server startup to `packages/server`.
 
 The current repository can migrate toward this structure gradually. Until then, `src/` can remain the frontend app and new `server/` or `packages/` folders can be introduced incrementally.
 ## Source Modes
@@ -157,7 +157,7 @@ Responsibilities:
 Base URL:
 
 ```text
-http://127.0.0.1:4873
+http://127.0.0.1:5540
 ```
 
 Health check:
@@ -171,7 +171,7 @@ Response:
 ```json
 {
   "ok": true,
-  "name": "mdocs-server",
+  "name": "modcs-server",
   "version": "0.1.0"
 }
 ```
@@ -258,7 +258,7 @@ This flow should not be removed or replaced.
 ## Data Flow: Local Server Mode
 
 ```text
-User runs `npx mdocs server`
+User runs `npx @iprep/mdocs start`
   -> Server starts on localhost
   -> Vercel frontend detects /health
   -> User enters GitHub URL
@@ -298,7 +298,7 @@ Manual sync should ship first. Auto sync can come later.
 
 ### Phase 1: Local Server MVP
 
-- Add `npx mdocs server`.
+- Add `npx @iprep/mdocs start`.
 - Add `/health`.
 - Add repo clone endpoint.
 - Add repo list endpoint.

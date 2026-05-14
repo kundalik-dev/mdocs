@@ -1,11 +1,11 @@
-# @mdocs/server
+﻿# @iprep/modcs-server
 
 Local HTTP server for mDocs. Clones public GitHub repositories, scans them for markdown files, and exposes their content over a REST API.
 
 ## Installation
 
 ```sh
-npm install @mdocs/server
+npm install @iprep/modcs-server
 ```
 
 ## Requirements
@@ -20,10 +20,10 @@ npm install @mdocs/server
 Starts the server and returns a Node.js `http.Server`.
 
 ```ts
-import { startServer } from '@mdocs/server';
+import { startServer } from '@iprep/modcs-server';
 
 const server = await startServer({
-  port: 4873,
+  port: 5540,
   host: '127.0.0.1',
   dataDir: '/path/to/project',
   origins: ['http://localhost:3000'],
@@ -37,9 +37,9 @@ console.log('Server started');
 Creates and returns an Express app without starting it — useful for testing or custom server setups.
 
 ```ts
-import { createApp, parseConfig } from '@mdocs/server';
+import { createApp, parseConfig } from '@iprep/modcs-server';
 
-const config = parseConfig({ port: 4873 });
+const config = parseConfig({ port: 5540 });
 const app = createApp(config);
 
 app.listen(config.port, config.host);
@@ -50,7 +50,7 @@ app.listen(config.port, config.host);
 Merges overrides with environment variables and built-in defaults.
 
 ```ts
-import { parseConfig } from '@mdocs/server';
+import { parseConfig } from '@iprep/modcs-server';
 
 const config = parseConfig({ port: 5000 });
 // { port: 5000, host: '127.0.0.1', dataDir: process.cwd(), origins: [...] }
@@ -60,7 +60,7 @@ const config = parseConfig({ port: 5000 });
 
 | Option | Env var | Default |
 |---|---|---|
-| `port` | `PORT` | `4873` |
+| `port` | `PORT` | `5540` |
 | `host` | `HOST` | `127.0.0.1` |
 | `dataDir` | `DATA_DIR` | `process.cwd()` |
 | `origins` | — | `['http://localhost:3000', 'http://127.0.0.1:3000', 'https://mdocs.vercel.app']` |
@@ -70,18 +70,18 @@ const config = parseConfig({ port: 5000 });
 Run the server directly without the CLI:
 
 ```sh
-node node_modules/@mdocs/server/dist/index.js
+node node_modules/@iprep/modcs-server/dist/index.js
 ```
 
 Or with environment variables:
 
 ```sh
-PORT=5000 DATA_DIR=/my/project node node_modules/@mdocs/server/dist/index.js
+PORT=5000 DATA_DIR=/my/project node node_modules/@iprep/modcs-server/dist/index.js
 ```
 
 ## REST API
 
-Base URL: `http://127.0.0.1:4873`
+Base URL: `http://127.0.0.1:5540`
 
 ---
 
@@ -93,7 +93,7 @@ Returns server status.
 
 ```jsonc
 // 200 OK
-{ "ok": true, "name": "mdocs-server", "version": "0.1.0" }
+{ "ok": true, "name": "modcs-server", "version": "0.1.4" }
 ```
 
 ---
@@ -107,7 +107,7 @@ Lists all tracked repositories.
 ```jsonc
 // 200 OK
 [
-  {
+   
     "id": "550e8400-e29b-41d4-a716-446655440000",
     "name": "owner/repo",
     "url": "https://github.com/owner/repo",
@@ -134,14 +134,14 @@ Clones a public GitHub repository and starts tracking it.
 | `branch` | `string` | No | Branch to clone (defaults to the repo's default branch) |
 
 ```sh
-curl -X POST http://127.0.0.1:4873/api/repos/clone \
+curl -X POST http://127.0.0.1:5540/api/repos/clone \
   -H "Content-Type: application/json" \
-  -d '{"url": "https://github.com/owner/repo", "branch": "main"}'
+  -d ' "url": "https://github.com/owner/repo", "branch": "main"}'
 ```
 
 ```jsonc
 // 201 Created
-{
+ 
   "id": "550e8400-e29b-41d4-a716-446655440000",
   "name": "owner/repo",
   "url": "https://github.com/owner/repo",
@@ -162,7 +162,7 @@ curl -X POST http://127.0.0.1:4873/api/repos/clone \
 Pulls the latest changes for a tracked repository (`git pull --ff-only`).
 
 ```sh
-curl -X POST http://127.0.0.1:4873/api/repos/550e8400-e29b-41d4-a716-446655440000/sync
+curl -X POST http://127.0.0.1:5540/api/repos/550e8400-e29b-41d4-a716-446655440000/sync
 ```
 
 Returns the updated `RepoMeta` object.
@@ -174,7 +174,7 @@ Returns the updated `RepoMeta` object.
 Removes a repository from tracking and deletes its local clone.
 
 ```sh
-curl -X DELETE http://127.0.0.1:4873/api/repos/550e8400-e29b-41d4-a716-446655440000
+curl -X DELETE http://127.0.0.1:5540/api/repos/550e8400-e29b-41d4-a716-446655440000
 ```
 
 ```
@@ -192,7 +192,7 @@ Lists all markdown files in the repository (`.md`, `.mdx`, `.markdown`). Files l
 ```jsonc
 // 200 OK
 [
-  {
+   
     "id": "docs/intro.md",
     "repoId": "550e8400-e29b-41d4-a716-446655440000",
     "name": "intro.md",
@@ -210,12 +210,12 @@ Lists all markdown files in the repository (`.md`, `.mdx`, `.markdown`). Files l
 Returns the content of a specific file.
 
 ```sh
-curl http://127.0.0.1:4873/api/repos/550e8400-e29b-41d4-a716-446655440000/files/docs/intro.md
+curl http://127.0.0.1:5540/api/repos/550e8400-e29b-41d4-a716-446655440000/files/docs/intro.md
 ```
 
 ```jsonc
 // 200 OK
-{
+ 
   "id": "docs/intro.md",
   "repoId": "550e8400-e29b-41d4-a716-446655440000",
   "name": "intro.md",
@@ -233,7 +233,7 @@ curl http://127.0.0.1:4873/api/repos/550e8400-e29b-41d4-a716-446655440000/files/
 All public types are exported:
 
 ```ts
-import type { Config, RepoMeta, FileRef, FileContent } from '@mdocs/server';
+import type { Config, RepoMeta, FileRef, FileContent } from '@iprep/modcs-server';
 ```
 
 ## Security
@@ -245,4 +245,4 @@ import type { Config, RepoMeta, FileRef, FileContent } from '@mdocs/server';
 
 ## Related packages
 
-- [`mdocs`](https://www.npmjs.com/package/mdocs) — CLI wrapper around this server
+- [`@iprep/mdocs`](https://www.npmjs.com/package/@iprep/mdocs) — CLI wrapper around this server

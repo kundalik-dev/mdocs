@@ -1,6 +1,6 @@
 {
-  "name": "@mdocs/server",
-  "version": "0.1.3",
+  "name": "@iprep/modcs-server",
+  "version": "0.1.4",
   "description": "mDocs local HTTP server",
   "type": "module",
   "main": "./dist/index.js",

@@ -1,6 +1,6 @@
-# mDocs — Claude Reference
+﻿# mDocs — Claude Reference
 
-Local documentation server monorepo. Users run `npx mdocs serve` to start a local server that clones GitHub repos and serves their markdown files to a hosted frontend viewer.
+Local documentation server monorepo. Users run `npx @iprep/mdocs start` to start a local server that clones GitHub repos and serves their markdown files to a hosted frontend viewer.
 
 ---
 
@@ -8,8 +8,8 @@ Local documentation server monorepo. Users run `npx mdocs serve` to start a loca
 
 ```
 packages/
-  cli/      — mdocs          — the npx-able CLI binary
-  server/   — @mdocs/server  — the Express HTTP server (library + standalone)
+  cli/      — @iprep/mdocs   — the npx-able CLI package (`modcs` binary)
+  server/   — @iprep/modcs-server  — the Express HTTP server (library + standalone)
 apps/
   frontend/ — Next.js 16 viewer (React 19, Zustand 5, Tailwind, shadcn/base-ui)
 docs/       — project documentation (API.md, ARCHITECTURE.md, TASKS.md, etc.)
@@ -37,14 +37,14 @@ pnpm dev:cli          # run cli in dev mode (tsx)
 cd apps/frontend && pnpm dev   # Next.js dev server on :3000
 ```
 
-`mdocs` depends on `@mdocs/server` via `workspace:*`. Always build server before cli.
+`@iprep/mdocs` depends on `@iprep/modcs-server` via `workspace:*`. Always build server before cli.
 
 ---
 
 ## How it works end-to-end
 
-1. User runs `npx mdocs serve`
-2. CLI creates `~/.mdocs/repos/` silently if missing, starts `@mdocs/server` on `http://127.0.0.1:4873`
+1. User runs `npx @iprep/mdocs start`
+2. CLI creates `~/.mdocs/repos/` silently if missing, starts `@iprep/modcs-server` on `http://127.0.0.1:5540`
 3. Browser opens to `https://idocs-md-viewer.vercel.app/` (the frontend)
 4. Frontend connects to local server — user clones a GitHub repo via the UI
 5. Server clones into `~/.mdocs/repos/<uuid>/`, scans `.md`/`.mdx` files, returns `FileRef[]`
@@ -56,7 +56,7 @@ cd apps/frontend && pnpm dev   # Next.js dev server on :3000
 
 - **`.mdocs/` is always at `~/.mdocs/`** — global per user, not per cwd
 - **GitHub HTTPS only** — only `https://github.com/owner/repo` URLs accepted
-- **Private repos** need `GITHUB_TOKEN=ghp_... mdocs serve` or `--github-token`
+- **Private repos** need `GITHUB_TOKEN=ghp_... modcs start` or `--github-token`
 - **Node >= 18** required
 - **Git must be in PATH** — server spawns `git clone/pull` as child process
 - **Never use shell string composition for git** — always strict argument arrays
@@ -65,14 +65,14 @@ cd apps/frontend && pnpm dev   # Next.js dev server on :3000
 
 ## Publishing
 
-The server publishes under the `@mdocs` scope, while the CLI publishes as the unscoped `mdocs` package. See `docs/PUBLISHING.md`.
+The server publishes as `@iprep/modcs-server`, while the CLI publishes as `@iprep/mdocs` with the `modcs` binary. See `docs/PUBLISHING.md`.
 
 ```sh
 cd packages/server && pnpm publish --access public
 cd packages/cli    && pnpm publish --access public
 ```
 
-Current versions: `@mdocs/server@0.1.3`, `mdocs@0.1.3`
+Current versions: `@iprep/modcs-server@0.1.4`, `@iprep/mdocs@0.1.4`
 
 ---
 
@@ -158,7 +158,7 @@ type ViewerSource = BrowserSource | LocalServerSource;
 | `sources` | `ViewerSource[]` | All open sources (browser + server) |
 | `activeSourceId` | `string \| null` | Which project is shown in sidebar |
 | `activeFileId` | `string \| null` | Currently open file |
-| `serverUrl` | `string` | Local server base URL (default: `http://127.0.0.1:4873`) |
+| `serverUrl` | `string` | Local server base URL (default: `http://127.0.0.1:5540`) |
 | `serverStatus` | `"disconnected" \| "connecting" \| "connected" \| "error"` | Health poll result |
 | `sidebarOpen` | `boolean` | Sidebar visibility |
 | `tocOpen` | `boolean` | TOC rail visibility |
@@ -216,7 +216,7 @@ class ServerClient {
 }
 ```
 
-Types mirror the server's `types.ts` exactly but are defined locally — do not import from `@mdocs/server`.
+Types mirror the server's `types.ts` exactly but are defined locally — do not import from `@iprep/modcs-server`.
 
 ---
 

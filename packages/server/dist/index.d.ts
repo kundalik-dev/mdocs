@@ -32,7 +32,7 @@ interface Config {
 
 declare function createApp(config: Config): Express;
 
-declare const DEFAULT_PORT = 4873;
+declare const DEFAULT_PORT = 5540;
 declare const DEFAULT_HOST = "127.0.0.1";
 declare const DEFAULT_ORIGINS: string[];
 declare function parseConfig(overrides?: Partial<Config>): Config;

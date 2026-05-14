@@ -10,7 +10,7 @@ importers:
 
   packages/cli:
     dependencies:
-      '@mdocs/server':
+      '@iprep/modcs-server':
         specifier: workspace:*
         version: link:../server
       chalk:

@@ -1,4 +1,4 @@
-# mDocs Implementation Tasks
+﻿# mDocs Implementation Tasks
 
 Track progress here. Check the box when a task is complete.
 
@@ -16,10 +16,10 @@ Track progress here. Check the box when a task is complete.
 
 - [x] **#3** Scaffold `packages/server` HTTP server entry point
   - `index.ts`, `app.ts`, `config.ts`
-  - Bind to `127.0.0.1:4873`
+  - Bind to `127.0.0.1:5540`
 
 - [x] **#4** Implement `/health` endpoint
-  - Returns `{ ok: true, name: "mdocs-server", version: "0.1.0" }`
+  - Returns `{ ok: true, name: "modcs-server", version: "0.1.4" }`
 
 - [x] **#5** Implement CORS and security middleware
   - Origin allowlist (Vercel prod + localhost:3000)
@@ -56,9 +56,9 @@ Track progress here. Check the box when a task is complete.
 
 ## Phase 3 — CLI (`packages/cli`)
 
-- [x] **#12** Scaffold `packages/cli` with `npx mdocs serve` command
+- [x] **#12** Scaffold `packages/cli` with `npx @iprep/mdocs start` command
   - `src/index.ts` entry point
-  - `commands/serve.ts` with `--port`, `--host`, `--data-dir`, `--origin` flags
+  - `commands/start.ts` with `--port`, `--host`, `--data-dir`, `--origin` flags
   - `commands/setup.ts` — initialize `.mdocs/repos/` structure
   - Gradient `mDocs` banner on server start (figlet + gradient-string)
   - Detects missing `.mdocs/` and prompts to initialize via inquirer

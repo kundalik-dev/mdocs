@@ -4,10 +4,14 @@
 import { readFileSync } from "fs";
 import { Command } from "commander";
 
-// src/commands/serve.ts
+// src/commands/start.ts
 import chalk2 from "chalk";
 import open from "open";
-import { startServer, DEFAULT_ORIGINS } from "@mdocs/server";
+import {
+  DEFAULT_ORIGINS,
+  DEFAULT_PORT,
+  startServer
+} from "@iprep/modcs-server";
 
 // src/lib/mdocs.ts
 import { existsSync, mkdirSync } from "fs";
@@ -50,12 +54,15 @@ function printBanner() {
   console.log();
 }
 
-// src/commands/serve.ts
-var VIEWER_URL = "https://idocs-md-viewer.vercel.app/";
-async function serve(options) {
+// src/commands/start.ts
+var VIEWER_URL = "https://mdocs-md-viewer.vercel.app/";
+async function start(options) {
   const cwd = resolveDataDir(options.dataDir);
   const port = parseInt(options.port, 10);
   const host = options.host;
+  if (Number.isNaN(port)) {
+    throw new Error(`Invalid port: ${options.port}`);
+  }
   if (!mdocsExists(cwd) || !reposDirExists(cwd)) {
     await runSetup(cwd);
   }
@@ -63,7 +70,13 @@ async function serve(options) {
   Starting server on ${host}:${port}...
 `));
   const origins = options.origin ? [options.origin, ...DEFAULT_ORIGINS] : DEFAULT_ORIGINS;
-  const server = await startServer({ port, host, dataDir: cwd, origins, githubToken: options.githubToken });
+  const server = await startServer({
+    port,
+    host,
+    dataDir: cwd,
+    origins,
+    githubToken: options.githubToken
+  });
   printBanner();
   console.log(
     chalk2.bold("  Server running at ") + chalk2.bold.underline.cyan(`http://${host}:${port}`)
@@ -76,17 +89,18 @@ async function serve(options) {
   console.log(chalk2.dim("\n  Press Ctrl+C to stop.\n"));
   void open(VIEWER_URL);
   process.on("SIGINT", () => {
-    console.log(chalk2.dim("\n  Stopping mDocs server\u2026\n"));
+    console.log(chalk2.dim("\n  Stopping mDocs server...\n"));
     server.close(() => process.exit(0));
   });
 }
+var DEFAULT_START_PORT = String(DEFAULT_PORT);
 
 // src/index.ts
 var program = new Command();
 var packageJson = JSON.parse(
   readFileSync(new URL("../package.json", import.meta.url), "utf8")
 );
-program.name("mdocs").description("mDocs \u2014 local documentation server").version(packageJson.version);
-program.command("serve").description("Start the mDocs local server").option("-p, --port <port>", "Port to listen on", "4873").option("-H, --host <host>", "Host to bind to", "127.0.0.1").option("-d, --data-dir <dir>", "Directory that holds (or will hold) .mdocs/").option("-o, --origin <origin>", "Allowed CORS origin").option("-t, --github-token <token>", "GitHub PAT for cloning private repositories (or set GITHUB_TOKEN env var)").action(serve);
+program.name("modcs").description("mDocs \u2014 local documentation server").version(packageJson.version);
+program.command("start").description("Start the mDocs local server").option("-p, --port <port>", "Port to listen on", DEFAULT_START_PORT).option("-H, --host <host>", "Host to bind to", "127.0.0.1").option("-d, --data-dir <dir>", "Directory that holds (or will hold) .mdocs/").option("-o, --origin <origin>", "Allowed CORS origin").option("-t, --github-token <token>", "GitHub PAT for cloning private repositories (or set GITHUB_TOKEN env var)").action(start);
 program.command("setup").description("Initialize .mdocs/ project structure in the current directory").option("-d, --data-dir <dir>", "Target directory (defaults to cwd)").action((opts) => runSetup(opts.dataDir));
 program.parse();

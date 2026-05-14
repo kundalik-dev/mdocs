@@ -1,4 +1,4 @@
-# mDocs Feature Plan
+﻿# mDocs Feature Plan
 
 This document describes the planned feature set for keeping the current browser file API workflow and adding optional localhost backend support for GitHub repositories.
 
@@ -29,13 +29,13 @@ The new backend mode should extend the product, not replace this mode.
 Users should be able to run:
 
 ```bash
-npx mdocs server
+npx @iprep/mdocs start
 ```
 
 Then open the hosted frontend on Vercel and connect to:
 
 ```text
-http://127.0.0.1:4873
+http://127.0.0.1:5540
 ```
 
 Frontend behavior:
@@ -196,23 +196,23 @@ Auto sync should have clear limits so it does not surprise users with background
 The package should provide a command:
 
 ```bash
-npx mdocs server
+npx @iprep/mdocs start
 ```
 
 Useful CLI options:
 
 ```bash
-npx mdocs server --port 4873
-npx mdocs server --host 127.0.0.1
-npx mdocs server --data-dir ~/.mdocs
-npx mdocs server --origin https://mdocs.vercel.app
+npx @iprep/mdocs start --port 5540
+npx @iprep/mdocs start --host 127.0.0.1
+npx @iprep/mdocs start --data-dir ~/.mdocs
+npx @iprep/mdocs start --origin https://mdocs.vercel.app
 ```
 
 CLI output should be simple:
 
 ```text
 mDocs server running
-URL: http://127.0.0.1:4873
+URL: http://127.0.0.1:5540
 Data: ~/.mdocs
 Allowed origins:
   - https://mdocs.vercel.app
@@ -296,7 +296,7 @@ Browser File API mode:
 
 Local Server mode:
 
-- User can run `npx mdocs server`.
+- User can run `npx @iprep/mdocs start`.
 - Vercel frontend can detect the server.
 - User can enter a GitHub URL and clone a repo.
 - Cloned markdown files appear in the sidebar.

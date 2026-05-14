@@ -24,7 +24,7 @@ import { Router } from "express";
 function healthRouter() {
   const router = Router();
   router.get("/", (_req, res) => {
-    res.json({ ok: true, name: "mdocs-server", version: "0.1.0" });
+    res.json({ ok: true, name: "modcs-server", version: "0.1.4" });
   });
   return router;
 }
@@ -38,7 +38,7 @@ import { mkdirSync } from "fs";
 // src/config.ts
 import { resolve } from "path";
 import { homedir } from "os";
-var DEFAULT_PORT = 4873;
+var DEFAULT_PORT = 5540;
 var DEFAULT_HOST = "127.0.0.1";
 var MDOCS_DIR = ".mdocs";
 var REPOS_SUBDIR = "repos";
