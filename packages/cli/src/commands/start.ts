@@ -38,13 +38,36 @@ export async function start(options: StartOptions): Promise<void> {
     ? [options.origin, ...DEFAULT_ORIGINS]
     : DEFAULT_ORIGINS;
 
-  const server = await startServer({
-    port,
-    host,
-    dataDir: cwd,
-    origins,
-    githubToken: options.githubToken,
-  });
+  let server;
+
+  try {
+    server = await startServer({
+      port,
+      host,
+      dataDir: cwd,
+      origins,
+      githubToken: options.githubToken,
+    });
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message.includes("EADDRINUSE")) {
+      console.error(
+        chalk.red(
+          `Failed to start mDocs server: port ${port} is already in use.`,
+        ),
+      );
+      console.error(
+        chalk.dim(
+          `Use a different port with --port <port> or stop the process already using ${host}:${port}.`,
+        ),
+      );
+    } else {
+      console.error(
+        chalk.red("Failed to start mDocs server:"),
+        error instanceof Error ? error.message : error,
+      );
+    }
+    process.exit(1);
+  }
 
   printBanner();
 
