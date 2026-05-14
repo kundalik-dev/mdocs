@@ -24,7 +24,7 @@ import { Router } from "express";
 function healthRouter() {
   const router = Router();
   router.get("/", (_req, res) => {
-    res.json({ ok: true, name: "modcs-server", version: "0.1.4" });
+    res.json({ ok: true, name: "modcs-server", version: "0.1.0" });
   });
   return router;
 }
@@ -45,7 +45,7 @@ var REPOS_SUBDIR = "repos";
 var DEFAULT_ORIGINS = [
   "http://localhost:3000",
   "http://127.0.0.1:3000",
-  "https://idocs-md-viewer.vercel.app"
+  "https://mdocs-md-viewer.vercel.app"
 ];
 function parseConfig(overrides = {}) {
   return {
