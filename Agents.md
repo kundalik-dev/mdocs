@@ -9,7 +9,7 @@ Local documentation server monorepo. Users run `npx @iprep/mdocs start` to start
 ```
 packages/
   cli/      — @iprep/mdocs   — the npx-able CLI package (`modcs` binary)
-  server/   — @iprep/modcs-server  — the Express HTTP server (library + standalone)
+  server/   — @iprep/modcs-server  — private/internal Express HTTP server bundled into the CLI
 apps/
   frontend/ — Next.js 16 viewer (React 19, Zustand 5, Tailwind, shadcn/base-ui)
 docs/       — project documentation (API.md, ARCHITECTURE.md, TASKS.md, etc.)
@@ -37,14 +37,14 @@ pnpm dev:cli          # run cli in dev mode (tsx)
 cd apps/frontend && pnpm dev   # Next.js dev server on :3000
 ```
 
-`@iprep/mdocs` depends on `@iprep/modcs-server` via `workspace:*`. Always build server before cli.
+`@iprep/mdocs` bundles the internal server source at build time. The server package is private and is not published separately.
 
 ---
 
 ## How it works end-to-end
 
 1. User runs `npx @iprep/mdocs start`
-2. CLI creates `~/.mdocs/repos/` silently if missing, starts `@iprep/modcs-server` on `http://127.0.0.1:5540`
+2. CLI creates `~/.mdocs/repos/` silently if missing, starts its bundled local server on `http://127.0.0.1:5540`
 3. Browser opens to `https://idocs-md-viewer.vercel.app/` (the frontend)
 4. Frontend connects to local server — user clones a GitHub repo via the UI
 5. Server clones into `~/.mdocs/repos/<uuid>/`, scans `.md`/`.mdx` files, returns `FileRef[]`
@@ -65,14 +65,13 @@ cd apps/frontend && pnpm dev   # Next.js dev server on :3000
 
 ## Publishing
 
-The server publishes as `@iprep/modcs-server`, while the CLI publishes as `@iprep/mdocs` with the `modcs` binary. See `docs/PUBLISHING.md`.
+Only the CLI publishes as `@iprep/mdocs` with the `modcs` binary. The server package is internal/private and bundled into the CLI. See `docs/PUBLISHING.md`.
 
 ```sh
-cd packages/server && pnpm publish --access public
-cd packages/cli    && pnpm publish --access public
+cd packages/cli && npm publish --access public
 ```
 
-Current versions: `@iprep/modcs-server@0.1.0`, `@iprep/mdocs@0.1.0`
+Current published package: `@iprep/mdocs`
 
 ---
 

@@ -3,12 +3,12 @@
   "private": false,
   "version": "0.1.0",
   "scripts": {
-    "build": "pnpm --filter @iprep/modcs-server build && pnpm --filter @iprep/mdocs build",
+    "build": "pnpm --filter @iprep/mdocs build",
     "dev:server": "pnpm --filter @iprep/modcs-server dev",
     "dev:cli": "pnpm --filter @iprep/mdocs dev",
     "build:server": "pnpm --filter @iprep/modcs-server build",
     "build:cli": "pnpm --filter @iprep/mdocs build",
-    "start": "pnpm build:server && pnpm --filter @iprep/mdocs dev:start"
+    "start": "pnpm build:cli && pnpm --filter @iprep/mdocs dev:start"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

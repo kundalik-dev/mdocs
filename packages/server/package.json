@@ -1,5 +1,6 @@
 {
   "name": "@iprep/modcs-server",
+  "private": true,
   "version": "0.1.0",
   "description": "mDocs local HTTP server",
   "type": "module",

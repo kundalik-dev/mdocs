@@ -1,189 +1,70 @@
-﻿# Publishing Guide
+# Publishing Guide
 
-Packages published to npm:
+Only one npm package is published:
 
-| Package         | Path              |
-| --------------- | ----------------- |
-| `@iprep/modcs-server` | `packages/server` |
-| `@iprep/mdocs` | `packages/cli`    |
+| Package | Path |
+|---|---|
+| `@iprep/mdocs` | `packages/cli` |
 
-**Order matters:** `@iprep/modcs-server` must be published before `@iprep/mdocs` because the CLI depends on it.
-
----
+`packages/server` is private/internal. Its source is bundled into the CLI during `pnpm build`, so `@iprep/modcs-server` does not need to exist on npm.
 
 ## Prerequisites
 
 - Node.js >= 18
 - pnpm >= 8
-- An npm account with access to publish `@iprep/mdocs` and `@iprep/modcs-server`
-- Logged in to npm (`npm whoami` should return your username)
+- npm account with access to publish under `@iprep`
+- Logged in to npm (`npm whoami`)
 
-> **Package names:** The CLI now publishes as `@iprep/mdocs` and installs the `modcs` binary.
-
----
-
-## Step 1 — Log in to npm
-
-```sh
-npm login
-```
-
-Verify you are logged in:
-
-```sh
-npm whoami
-```
-
-Check which packages you have access to (npm v9+):
-
-```sh
-npm access list packages
-```
-
-> **Note:** `npm access list packages @iprep` was removed in npm v9. Use the command above and look for `@iprep/*` entries. If the scope has never been published to, it won't appear yet — that's expected on a first publish.
-
----
-
-## Step 2 — Install dependencies
+## Build
 
 From the repo root:
 
 ```sh
 pnpm install
-```
-
----
-
-## Step 3 — Build both packages
-
-From the repo root:
-
-```sh
 pnpm build
 ```
 
-This runs `@iprep/modcs-server` build first, then `@iprep/mdocs`. Both output to their respective `dist/` folders with JS and `.d.ts` declaration files.
+The CLI bundle at `packages/cli/dist/index.js` includes the local server code.
 
----
+## Dry Run
 
-## Step 4 — Dry run (verify what will be published)
-
-Run a dry run for each package to see exactly which files will be included in the tarball without actually publishing.
-
-**`@iprep/modcs-server`:**
-
-```sh
-cd packages/server
-pnpm publish --dry-run --access public
-```
-
-**`@iprep/mdocs`:**
+From the CLI package:
 
 ```sh
 cd packages/cli
-pnpm publish --dry-run
+npm publish --dry-run --access public
 ```
 
-### What to check in the dry-run output
+Expected tarball contents:
 
-- Only `dist/` files are listed — no `src/`, `tsup.config.ts`, or other dev files
-- The version number is correct
-- `@iprep/modcs-server`'s `workspace:*` dependency is replaced with the actual semver (e.g. `0.1.0`)
-
-Expected `@iprep/modcs-server` tarball contents:
-
-```
+```text
 dist/index.js
 dist/index.d.ts
 package.json
-README.md   ← optional but recommended
+README.md
 ```
 
-Expected `@iprep/mdocs` tarball contents:
+Check that `package.json` does not contain `workspace:*` or `@iprep/modcs-server` in `dependencies`.
 
-```
-dist/index.js
-dist/index.d.ts
-package.json
-README.md   ← optional but recommended
-```
-
----
-
-## Step 5 — Publish `@iprep/modcs-server`
-
-```sh
-cd packages/server
-pnpm publish --access public
-```
-
-Confirm the package is live:
-
-```sh
-npm info @iprep/modcs-server
-```
-
----
-
-## Step 6 — Publish `@iprep/mdocs`
+## Publish
 
 ```sh
 cd packages/cli
-pnpm publish
+npm publish --access public
 ```
 
-Confirm the package is live:
+Verify:
 
 ```sh
 npm info @iprep/mdocs
-```
-
----
-
-## Step 7 — Verify the CLI works after install
-
-Test a clean global install:
-
-```sh
-npm install -g @iprep/mdocs
-modcs --version
-modcs --help
-```
-
-Or test with `npx` without installing globally:
-
-```sh
 npx @iprep/mdocs --help
 ```
 
----
-
-## Bumping versions for future releases
-
-Use pnpm's built-in version commands from inside each package directory:
-
-```sh
-# patch: 0.1.0 → 0.1.1
-pnpm version patch
-
-# minor: 0.1.0 → 0.2.0
-pnpm version minor
-
-# major: 0.1.0 → 1.0.0
-pnpm version major
-```
-
-Always bump `@iprep/modcs-server` first, then update `@iprep/mdocs`'s dependency version to match before bumping and publishing the CLI.
-
----
-
 ## Troubleshooting
 
-| Error                      | Fix                                                                                      |
-| -------------------------- | ---------------------------------------------------------------------------------------- |
-| `403 Forbidden`            | You are not logged in or lack access to the `@iprep` scope — run `npm login`             |
-| Cannot publish `@iprep/mdocs`     | Confirm your npm user has publish access to the `@iprep` scope |
-| `402 Payment Required`     | The scope is private by default — pass `--access public`                                 |
-| `workspace:*` not resolved | Use `pnpm publish` (not `npm publish`) — pnpm replaces workspace protocols automatically |
-| Type errors during build   | Run `pnpm --filter @iprep/modcs-server typecheck` to find the offending file                   |
-| `npm access list packages @iprep` errors | Command removed in npm v9 — use `npm access list packages` instead |
+| Error | Fix |
+|---|---|
+| `402 Payment Required` | Use `--access public` for the scoped package. |
+| `Unsupported URL Type "workspace:"` | Remove workspace protocol dependencies from the published package manifest. |
+| Missing `modcs` command | Confirm `packages/cli/package.json` has `"bin": { "modcs": "dist/index.js" }`. |
+| Type errors during build | Run `pnpm --filter @iprep/mdocs typecheck` and `pnpm --filter @iprep/modcs-server typecheck`. |

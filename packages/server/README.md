@@ -2,11 +2,9 @@
 
 Local HTTP server for mDocs. Clones public GitHub repositories, scans them for markdown files, and exposes their content over a REST API.
 
-## Installation
+## Package status
 
-```sh
-npm install @iprep/modcs-server
-```
+This package is private/internal. It is bundled into `@iprep/mdocs` at CLI build time and is not published separately.
 
 ## Requirements
 

@@ -4,9 +4,13 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": "..",
     "strict": true,
     "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@iprep/modcs-server": ["../server/src/index.ts"]
+    },
     "skipLibCheck": true,
     "declaration": true,
     "sourceMap": true

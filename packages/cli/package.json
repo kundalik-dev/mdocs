@@ -1,10 +1,10 @@
 {
   "name": "@iprep/mdocs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "mDocs CLI — start the local documentation server",
   "type": "module",
   "bin": {
-    "modcs": "./dist/index.js"
+    "modcs": "dist/index.js"
   },
   "files": [
     "dist"
@@ -16,9 +16,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@iprep/modcs-server": "workspace:*",
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
     "figlet": "^1.7.0",
     "gradient-string": "^2.0.2",
     "open": "^11.0.0"
