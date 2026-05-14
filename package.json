@@ -1,7 +1,7 @@
 {
   "name": "mdocs-cli",
   "private": false,
-  "version": "0.1.4",
+  "version": "0.1.0",
   "scripts": {
     "build": "pnpm --filter @iprep/modcs-server build && pnpm --filter @iprep/mdocs build",
     "dev:server": "pnpm --filter @iprep/modcs-server dev",

@@ -1,4 +1,4 @@
-﻿# mDocs Implementation Tasks
+# mDocs Implementation Tasks
 
 Track progress here. Check the box when a task is complete.
 
@@ -19,7 +19,7 @@ Track progress here. Check the box when a task is complete.
   - Bind to `127.0.0.1:5540`
 
 - [x] **#4** Implement `/health` endpoint
-  - Returns `{ ok: true, name: "modcs-server", version: "0.1.4" }`
+  - Returns `{ ok: true, name: "modcs-server", version: "0.1.0" }`
 
 - [x] **#5** Implement CORS and security middleware
   - Origin allowlist (Vercel prod + localhost:3000)

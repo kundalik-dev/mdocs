@@ -4,7 +4,7 @@ export function healthRouter(): Router {
   const router = Router();
 
   router.get('/', (_req, res) => {
-    res.json({ ok: true, name: 'modcs-server', version: '0.1.4' });
+    res.json({ ok: true, name: 'modcs-server', version: '0.1.0' });
   });
 
   return router;

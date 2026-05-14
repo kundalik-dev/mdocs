@@ -1,4 +1,4 @@
-﻿# mDocs Server API
+# mDocs Server API
 
 Base URL: `http://127.0.0.1:5540`
 
@@ -12,7 +12,7 @@ Returns server status. Use this to check if the server is running before connect
 
 **Response**
 ```json
-{ "ok": true, "name": "modcs-server", "version": "0.1.4" }
+{ "ok": true, "name": "modcs-server", "version": "0.1.0" }
 ```
 
 **Test**

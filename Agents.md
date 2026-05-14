@@ -1,4 +1,4 @@
-﻿# mDocs — Claude Reference
+# mDocs — Claude Reference
 
 Local documentation server monorepo. Users run `npx @iprep/mdocs start` to start a local server that clones GitHub repos and serves their markdown files to a hosted frontend viewer.
 
@@ -72,7 +72,7 @@ cd packages/server && pnpm publish --access public
 cd packages/cli    && pnpm publish --access public
 ```
 
-Current versions: `@iprep/modcs-server@0.1.4`, `@iprep/mdocs@0.1.4`
+Current versions: `@iprep/modcs-server@0.1.0`, `@iprep/mdocs@0.1.0`
 
 ---
 

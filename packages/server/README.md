@@ -1,4 +1,4 @@
-﻿# @iprep/modcs-server
+# @iprep/modcs-server
 
 Local HTTP server for mDocs. Clones public GitHub repositories, scans them for markdown files, and exposes their content over a REST API.
 
@@ -93,7 +93,7 @@ Returns server status.
 
 ```jsonc
 // 200 OK
-{ "ok": true, "name": "modcs-server", "version": "0.1.4" }
+{ "ok": true, "name": "modcs-server", "version": "0.1.0" }
 ```
 
 ---
