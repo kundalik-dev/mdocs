@@ -64,7 +64,7 @@ npx @iprep/mdocks --help
 
 | Error | Fix |
 |---|---|
-| `402 Payment Required` | Use `--access public` for the scoped package. |
+| `402 Payment Required` | Use `--access public` for the scoped package. `--access-public` is not a valid npm flag. |
 | `Unsupported URL Type "workspace:"` | Remove workspace protocol dependencies from the published package manifest. |
 | Missing `modcs` command | Confirm `packages/cli/package.json` has `"bin": { "modcs": "dist/index.js" }`. |
 | Type errors during build | Run `pnpm --filter @iprep/mdocks typecheck` and `pnpm --filter @iprep/modcs-server typecheck`. |

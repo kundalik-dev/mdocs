@@ -1,8 +1,11 @@
 {
   "name": "@iprep/mdocks",
-  "version": "0.1.7",
+  "version": "0.1.0",
   "description": "mDocks CLI - start the local documentation server",
   "homepage": "https://www.mdocks.dev/",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "bin": {
     "modcs": "dist/index.js"
