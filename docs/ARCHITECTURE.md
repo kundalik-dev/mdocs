@@ -3,7 +3,7 @@
 mDocs should support two document sources side by side:
 
 1. Browser File API mode, which already exists and reads local files through the File System Access API.
-2. Local backend mode, where the user runs `npx @iprep/mdocs start` and the deployed Vercel frontend talks to `http://127.0.0.1:<port>`.
+2. Local backend mode, where the user runs `npx @iprep/mdocks start` and the deployed Vercel frontend talks to `http://127.0.0.1:<port>`.
 
 The goal is to keep the current private, browser-only workflow working while adding a stronger local server workflow for Git clone, Git pull, repo indexing, and markdown APIs.
 
@@ -11,7 +11,7 @@ The goal is to keep the current private, browser-only workflow working while add
 
 ```text
 Vercel frontend
-  https://mdocs.vercel.app
+  https://www.mdocks.dev
   - Viewer UI
   - Source picker
   - Markdown renderer
@@ -25,7 +25,7 @@ Browser File API source
 
 Local mDocs server
   http://127.0.0.1:5540
-  - Started by `npx @iprep/mdocs start`
+  - Started by `npx @iprep/mdocks start`
   - Owns filesystem and git operations
   - Stores cloned repos under `.mdocs`
   - Exposes HTTP APIs consumed by the frontend
@@ -80,7 +80,7 @@ mdocs/
 Ownership:
 
 - `packages/server` owns localhost HTTP APIs, git operations, repo scans, and `.mdocs` storage.
-- `packages/cli` owns the `npx @iprep/mdocs start` command, `.mdocs` initialization, and delegates server startup to `packages/server`.
+- `packages/cli` owns the `npx @iprep/mdocks start` command, `.mdocs` initialization, and delegates server startup to `packages/server`.
 
 The current repository can migrate toward this structure gradually. Until then, `src/` can remain the frontend app and new `server/` or `packages/` folders can be introduced incrementally.
 ## Source Modes
@@ -258,7 +258,7 @@ This flow should not be removed or replaced.
 ## Data Flow: Local Server Mode
 
 ```text
-User runs `npx @iprep/mdocs start`
+User runs `npx @iprep/mdocks start`
   -> Server starts on localhost
   -> Vercel frontend detects /health
   -> User enters GitHub URL
@@ -298,7 +298,7 @@ Manual sync should ship first. Auto sync can come later.
 
 ### Phase 1: Local Server MVP
 
-- Add `npx @iprep/mdocs start`.
+- Add `npx @iprep/mdocks start`.
 - Add `/health`.
 - Add repo clone endpoint.
 - Add repo list endpoint.

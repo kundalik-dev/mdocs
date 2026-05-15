@@ -1,6 +1,6 @@
-# mDocs — Claude Reference
+﻿# mDocs — Claude Reference
 
-Local documentation server monorepo. Users run `npx @iprep/mdocs start` to start a local server that clones GitHub repos and serves their markdown files to a hosted frontend viewer.
+Local documentation server monorepo. Users run `npx @iprep/mdocks start` to start a local server that clones GitHub repos and serves their markdown files to a hosted frontend viewer.
 
 ---
 
@@ -8,7 +8,7 @@ Local documentation server monorepo. Users run `npx @iprep/mdocs start` to start
 
 ```
 packages/
-  cli/      — @iprep/mdocs   — the npx-able CLI package (`modcs` binary)
+  cli/      — @iprep/mdocks   — the npx-able CLI package (`modcs` binary)
   server/   — @iprep/modcs-server  — private/internal Express HTTP server bundled into the CLI
 apps/
   frontend/ — Next.js 16 viewer (React 19, Zustand 5, Tailwind, shadcn/base-ui)
@@ -37,15 +37,15 @@ pnpm dev:cli          # run cli in dev mode (tsx)
 cd apps/frontend && pnpm dev   # Next.js dev server on :3000
 ```
 
-`@iprep/mdocs` bundles the internal server source at build time. The server package is private and is not published separately.
+`@iprep/mdocks` bundles the internal server source at build time. The server package is private and is not published separately.
 
 ---
 
 ## How it works end-to-end
 
-1. User runs `npx @iprep/mdocs start`
+1. User runs `npx @iprep/mdocks start`
 2. CLI creates `~/.mdocs/repos/` silently if missing, starts its bundled local server on `http://127.0.0.1:5540`
-3. Browser opens to `https://idocs-md-viewer.vercel.app/` (the frontend)
+3. Browser opens to `https://www.mdocks.dev/` (the frontend)
 4. Frontend connects to local server — user clones a GitHub repo via the UI
 5. Server clones into `~/.mdocs/repos/<uuid>/`, scans `.md`/`.mdx` files, returns `FileRef[]`
 6. Frontend fetches and renders markdown; files are never uploaded to Vercel
@@ -65,13 +65,13 @@ cd apps/frontend && pnpm dev   # Next.js dev server on :3000
 
 ## Publishing
 
-Only the CLI publishes as `@iprep/mdocs` with the `modcs` binary. The server package is internal/private and bundled into the CLI. See `docs/PUBLISHING.md`.
+Only the CLI publishes as `@iprep/mdocks` with the `modcs` binary. The server package is internal/private and bundled into the CLI. See `docs/PUBLISHING.md`.
 
 ```sh
 cd packages/cli && npm publish --access public
 ```
 
-Current published package: `@iprep/mdocs`
+Current published package: `@iprep/mdocks`
 
 ---
 

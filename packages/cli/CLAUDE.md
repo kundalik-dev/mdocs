@@ -1,6 +1,6 @@
-﻿# @iprep/mdocs CLI Reference
+﻿# @iprep/mdocks CLI Reference
 
-CLI wrapper around `@iprep/modcs-server`. Provides the `modcs` binary with `start` and `setup` commands. Published to npm as `@iprep/mdocs`; users run it via `npx @iprep/mdocs start` or a global install.
+CLI wrapper around `@iprep/modcs-server`. Provides the `modcs` binary with `start` and `setup` commands. Published to npm as `@iprep/mdocks`; users run it via `npx @iprep/mdocks start` or a global install.
 
 ## Key files
 
@@ -33,7 +33,7 @@ src/
 2. Silently creates `~/.mdocs/repos/` if missing (no prompt)
 3. Starts `@iprep/modcs-server`
 4. Prints banner + server URL to stdout
-5. Opens `https://idocs-md-viewer.vercel.app/` in the default browser via `open`
+5. Opens `https://www.mdocks.dev/` in the default browser via `open`
 6. Handles `SIGINT` for clean shutdown
 
 ### `modcs setup`

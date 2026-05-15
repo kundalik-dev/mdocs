@@ -29,7 +29,7 @@ The new backend mode should extend the product, not replace this mode.
 Users should be able to run:
 
 ```bash
-npx @iprep/mdocs start
+npx @iprep/mdocks start
 ```
 
 Then open the hosted frontend on Vercel and connect to:
@@ -196,16 +196,16 @@ Auto sync should have clear limits so it does not surprise users with background
 The package should provide a command:
 
 ```bash
-npx @iprep/mdocs start
+npx @iprep/mdocks start
 ```
 
 Useful CLI options:
 
 ```bash
-npx @iprep/mdocs start --port 5540
-npx @iprep/mdocs start --host 127.0.0.1
-npx @iprep/mdocs start --data-dir ~/.mdocs
-npx @iprep/mdocs start --origin https://mdocs.vercel.app
+npx @iprep/mdocks start --port 5540
+npx @iprep/mdocks start --host 127.0.0.1
+npx @iprep/mdocks start --data-dir ~/.mdocs
+npx @iprep/mdocks start --origin https://www.mdocks.dev
 ```
 
 CLI output should be simple:
@@ -215,7 +215,7 @@ mDocs server running
 URL: http://127.0.0.1:5540
 Data: ~/.mdocs
 Allowed origins:
-  - https://mdocs.vercel.app
+  - https://www.mdocks.dev
   - http://localhost:3000
 ```
 
@@ -296,7 +296,7 @@ Browser File API mode:
 
 Local Server mode:
 
-- User can run `npx @iprep/mdocs start`.
+- User can run `npx @iprep/mdocks start`.
 - Vercel frontend can detect the server.
 - User can enter a GitHub URL and clone a repo.
 - Cloned markdown files appear in the sidebar.

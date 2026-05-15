@@ -1,17 +1,17 @@
-﻿# @iprep/mdocs
+﻿# @iprep/mdocks
 
 Command-line interface for mDocs — spins up a local documentation server that serves markdown files from cloned GitHub repositories.
 
 ## Installation
 
 ```sh
-npm install -g @iprep/mdocs
+npm install -g @iprep/mdocks
 ```
 
 Or run without installing:
 
 ```sh
-npx @iprep/mdocs start
+npx @iprep/mdocks start
 ```
 
 ## Requirements

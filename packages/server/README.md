@@ -1,10 +1,10 @@
-# @iprep/modcs-server
+﻿# @iprep/modcs-server
 
 Local HTTP server for mDocs. Clones public GitHub repositories, scans them for markdown files, and exposes their content over a REST API.
 
 ## Package status
 
-This package is private/internal. It is bundled into `@iprep/mdocs` at CLI build time and is not published separately.
+This package is private/internal. It is bundled into `@iprep/mdocks` at CLI build time and is not published separately.
 
 ## Requirements
 
@@ -61,7 +61,7 @@ const config = parseConfig({ port: 5000 });
 | `port` | `PORT` | `5540` |
 | `host` | `HOST` | `127.0.0.1` |
 | `dataDir` | `DATA_DIR` | `process.cwd()` |
-| `origins` | — | `['http://localhost:3000', 'http://127.0.0.1:3000', 'https://mdocs.vercel.app']` |
+| `origins` | — | `['http://localhost:3000', 'http://127.0.0.1:3000', 'https://www.mdocks.dev']` |
 
 ## Standalone usage
 
@@ -243,4 +243,4 @@ import type { Config, RepoMeta, FileRef, FileContent } from '@iprep/modcs-server
 
 ## Related packages
 
-- [`@iprep/mdocs`](https://www.npmjs.com/package/@iprep/mdocs) — CLI wrapper around this server
+- [`@iprep/mdocks`](https://www.npmjs.com/package/@iprep/mdocks) — CLI wrapper around this server

@@ -1,10 +1,10 @@
-# Publishing Guide
+﻿# Publishing Guide
 
 Only one npm package is published:
 
 | Package | Path |
 |---|---|
-| `@iprep/mdocs` | `packages/cli` |
+| `@iprep/mdocks` | `packages/cli` |
 
 `packages/server` is private/internal. Its source is bundled into the CLI during `pnpm build`, so `@iprep/modcs-server` does not need to exist on npm.
 
@@ -56,8 +56,8 @@ npm publish --access public
 Verify:
 
 ```sh
-npm info @iprep/mdocs
-npx @iprep/mdocs --help
+npm info @iprep/mdocks
+npx @iprep/mdocks --help
 ```
 
 ## Troubleshooting
@@ -67,4 +67,4 @@ npx @iprep/mdocs --help
 | `402 Payment Required` | Use `--access public` for the scoped package. |
 | `Unsupported URL Type "workspace:"` | Remove workspace protocol dependencies from the published package manifest. |
 | Missing `modcs` command | Confirm `packages/cli/package.json` has `"bin": { "modcs": "dist/index.js" }`. |
-| Type errors during build | Run `pnpm --filter @iprep/mdocs typecheck` and `pnpm --filter @iprep/modcs-server typecheck`. |
+| Type errors during build | Run `pnpm --filter @iprep/mdocks typecheck` and `pnpm --filter @iprep/modcs-server typecheck`. |

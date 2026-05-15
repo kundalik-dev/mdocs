@@ -47,7 +47,7 @@ Current state of the two active packages: `packages/cli` and `packages/server`.
 - [x] `GET /api/repos/:id/files` — list all markdown files in a repo
 - [x] `GET /api/repos/:id/files/:path` — read a single markdown file with metadata
 - [x] File-based storage — no database; each repo writes `<uuid>.json` alongside the clone
-- [x] CORS middleware — origin allowlist (localhost:3000, 127.0.0.1:3000, mdocs.vercel.app)
+- [x] CORS middleware — origin allowlist (localhost:3000, 127.0.0.1:3000, www.mdocks.dev)
 - [x] GitHub URL validation — HTTPS only, github.com only
 - [x] Path traversal guard on all file reads
 - [x] Recursive markdown scanner — skips `node_modules`, `.next`, `dist`, `build`, `.git`

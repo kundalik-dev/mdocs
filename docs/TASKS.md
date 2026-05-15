@@ -1,4 +1,4 @@
-# mDocs Implementation Tasks
+﻿# mDocs Implementation Tasks
 
 Track progress here. Check the box when a task is complete.
 
@@ -56,7 +56,7 @@ Track progress here. Check the box when a task is complete.
 
 ## Phase 3 — CLI (`packages/cli`)
 
-- [x] **#12** Scaffold `packages/cli` with `npx @iprep/mdocs start` command
+- [x] **#12** Scaffold `packages/cli` with `npx @iprep/mdocks start` command
   - `src/index.ts` entry point
   - `commands/start.ts` with `--port`, `--host`, `--data-dir`, `--origin` flags
   - `commands/setup.ts` — initialize `.mdocs/repos/` structure

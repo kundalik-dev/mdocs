@@ -51,7 +51,7 @@ var REPOS_SUBDIR = "repos";
 var DEFAULT_ORIGINS = [
   "http://localhost:3000",
   "http://127.0.0.1:3000",
-  "https://mdocs-reader.vercel.app"
+  "https://www.mdocks.dev"
 ];
 function parseConfig(overrides = {}) {
   return {
@@ -449,7 +449,7 @@ function printBanner() {
 }
 
 // src/commands/start.ts
-var VIEWER_URL = "https://mdocs-reader.vercel.app/";
+var VIEWER_URL = "https://www.mdocks.dev/";
 async function start(options) {
   const cwd = resolveDataDir(options.dataDir);
   const requestedPort = parseInt(options.port, 10);

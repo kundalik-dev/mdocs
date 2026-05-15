@@ -1,14 +1,14 @@
 {
-  "name": "mdocs-cli",
+  "name": "mdocks-cli",
   "private": false,
   "version": "0.1.0",
   "scripts": {
-    "build": "pnpm --filter @iprep/mdocs build",
+    "build": "pnpm --filter @iprep/mdocks build",
     "dev:server": "pnpm --filter @iprep/modcs-server dev",
-    "dev:cli": "pnpm --filter @iprep/mdocs dev",
+    "dev:cli": "pnpm --filter @iprep/mdocks dev",
     "build:server": "pnpm --filter @iprep/modcs-server build",
-    "build:cli": "pnpm --filter @iprep/mdocs build",
-    "start": "pnpm build:cli && pnpm --filter @iprep/mdocs dev:start"
+    "build:cli": "pnpm --filter @iprep/mdocks build",
+    "start": "pnpm build:cli && pnpm --filter @iprep/mdocks dev:start"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

@@ -1,4 +1,4 @@
-# mDocs Server API
+﻿# mDocs Server API
 
 Base URL: `http://127.0.0.1:5540`
 
@@ -183,19 +183,19 @@ No database is used. Each JSON file is the source of truth for that repo's metad
 
 ```bash
 # Start with defaults (127.0.0.1:5540)
-npx @iprep/mdocs start
+npx @iprep/mdocks start
 
 # Custom port / host
-npx @iprep/mdocs start --port 5000 --host localhost
+npx @iprep/mdocks start --port 5000 --host localhost
 
 # Custom data directory (where .mdocs/ will be created)
-npx @iprep/mdocs start --data-dir /path/to/project
+npx @iprep/mdocks start --data-dir /path/to/project
 
 # Allow a custom frontend origin
-npx @iprep/mdocs start --origin http://localhost:4000
+npx @iprep/mdocks start --origin http://localhost:4000
 ```
 
 Default allowed CORS origins:
 - `http://localhost:3000`
 - `http://127.0.0.1:3000`
-- `https://mdocs.vercel.app`
+- `https://www.mdocks.dev`
