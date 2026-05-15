@@ -431,11 +431,11 @@ async function findAvailablePort(startPort, host) {
 import chalk from "chalk";
 async function runSetup(cwd) {
   const dir = resolveDataDir(cwd);
-  console.log(chalk.dim("\n  Setting up mDocs project structure...\n"));
+  console.log(chalk.dim("\n  Setting up mDocks project structure...\n"));
   createMdocsStructure(dir);
   console.log(chalk.green("  \u2713") + chalk.white(`  ${MDOCS_DIR2}/`));
   console.log(chalk.green("  \u2713") + chalk.white(`  ${REPOS_DIR}/`));
-  console.log(chalk.bold.green("\n  mDocs initialized successfully!\n"));
+  console.log(chalk.bold.green("\n  mDocks initialized successfully!\n"));
 }
 
 // src/lib/banner.ts
@@ -443,7 +443,7 @@ import gradient from "gradient-string";
 import figlet from "figlet";
 var GRADIENT = ["#06b6d4", "#8b5cf6", "#ec4899"];
 function printBanner() {
-  const text = figlet.textSync("mDocs", { font: "ANSI Shadow" });
+  const text = figlet.textSync("mDocks", { font: "ANSI Shadow" });
   console.log(gradient(GRADIENT).multiline(text));
   console.log();
 }
@@ -499,7 +499,7 @@ async function start(options) {
     });
   } catch (error) {
     console.error(
-      chalk2.red("Failed to start mDocs server:"),
+      chalk2.red("Failed to start mDocks server:"),
       error instanceof Error ? error.message : error
     );
     process.exit(1);
@@ -516,7 +516,7 @@ async function start(options) {
   console.log(chalk2.dim("\n  Press Ctrl+C to stop.\n"));
   void open(VIEWER_URL);
   process.on("SIGINT", () => {
-    console.log(chalk2.dim("\n  Stopping mDocs server...\n"));
+    console.log(chalk2.dim("\n  Stopping mDocks server...\n"));
     server.close(() => process.exit(0));
   });
 }
@@ -527,7 +527,7 @@ var program = new Command();
 var packageJson = JSON.parse(
   readFileSync3(new URL("../package.json", import.meta.url), "utf8")
 );
-program.name("modcs").description("mDocs \u2014 local documentation server").version(packageJson.version);
-program.command("start").description("Start the mDocs local server").option("-p, --port <port>", "Port to listen on", DEFAULT_START_PORT).option("-H, --host <host>", "Host to bind to", "127.0.0.1").option("-d, --data-dir <dir>", "Directory that holds (or will hold) .mdocs/").option("-o, --origin <origin>", "Allowed CORS origin").option("-t, --github-token <token>", "GitHub PAT for cloning private repositories (or set GITHUB_TOKEN env var)").action(start);
+program.name("modcs").description("mDocks - local documentation server").version(packageJson.version);
+program.command("start").description("Start the mDocks local server").option("-p, --port <port>", "Port to listen on", DEFAULT_START_PORT).option("-H, --host <host>", "Host to bind to", "127.0.0.1").option("-d, --data-dir <dir>", "Directory that holds (or will hold) .mdocs/").option("-o, --origin <origin>", "Allowed CORS origin").option("-t, --github-token <token>", "GitHub PAT for cloning private repositories (or set GITHUB_TOKEN env var)").action(start);
 program.command("setup").description("Initialize .mdocs/ project structure in the current directory").option("-d, --data-dir <dir>", "Target directory (defaults to cwd)").action((opts) => runSetup(opts.dataDir));
 program.parse();

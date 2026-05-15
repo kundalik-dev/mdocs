@@ -4,11 +4,11 @@ import { createMdocsStructure, MDOCS_DIR, REPOS_DIR, resolveDataDir } from '../l
 export async function runSetup(cwd?: string): Promise<void> {
   const dir = resolveDataDir(cwd);
 
-  console.log(chalk.dim('\n  Setting up mDocs project structure...\n'));
+  console.log(chalk.dim('\n  Setting up mDocks project structure...\n'));
 
   createMdocsStructure(dir);
 
   console.log(chalk.green('  ✓') + chalk.white(`  ${MDOCS_DIR}/`));
   console.log(chalk.green('  ✓') + chalk.white(`  ${REPOS_DIR}/`));
-  console.log(chalk.bold.green('\n  mDocs initialized successfully!\n'));
+  console.log(chalk.bold.green('\n  mDocks initialized successfully!\n'));
 }

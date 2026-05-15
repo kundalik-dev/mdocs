@@ -75,7 +75,7 @@ export async function start(options: StartOptions): Promise<void> {
     });
   } catch (error: unknown) {
     console.error(
-      chalk.red("Failed to start mDocs server:"),
+      chalk.red("Failed to start mDocks server:"),
       error instanceof Error ? error.message : error,
     );
     process.exit(1);
@@ -97,7 +97,7 @@ export async function start(options: StartOptions): Promise<void> {
   void open(VIEWER_URL);
 
   process.on("SIGINT", () => {
-    console.log(chalk.dim("\n  Stopping mDocs server...\n"));
+    console.log(chalk.dim("\n  Stopping mDocks server...\n"));
     server.close(() => process.exit(0));
   });
 }

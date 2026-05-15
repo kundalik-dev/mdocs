@@ -12,12 +12,12 @@ const packageJson = JSON.parse(
 
 program
   .name('modcs')
-  .description('mDocs — local documentation server')
+  .description('mDocks - local documentation server')
   .version(packageJson.version);
 
 program
   .command('start')
-  .description('Start the mDocs local server')
+  .description('Start the mDocks local server')
   .option('-p, --port <port>', 'Port to listen on', DEFAULT_START_PORT)
   .option('-H, --host <host>', 'Host to bind to', '127.0.0.1')
   .option('-d, --data-dir <dir>', 'Directory that holds (or will hold) .mdocs/')

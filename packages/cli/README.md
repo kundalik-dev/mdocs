@@ -1,6 +1,6 @@
 ﻿# @iprep/mdocks
 
-Command-line interface for mDocs — spins up a local documentation server that serves markdown files from cloned GitHub repositories.
+Command-line interface for mDocks - spins up a local documentation server that serves markdown files from cloned GitHub repositories.
 
 ## Installation
 
@@ -41,7 +41,7 @@ Creates:
 
 ### `modcs start`
 
-Starts the mDocs local HTTP server. If `.mdocs/` does not exist, it is initialized automatically.
+Starts the mDocks local HTTP server. If `.mdocs/` does not exist, it is initialized automatically.
 
 ```sh
 modcs start [options]
